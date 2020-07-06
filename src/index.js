@@ -2,11 +2,14 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { Amplify } from 'aws-amplify';
+
 import config from './config';
 import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
+import { initSentry } from './libs/errorLib';
 
+initSentry();
 Amplify.configure({
   Auth: {
     mandatorySignIn: true,
@@ -30,6 +33,8 @@ Amplify.configure({
     ]
   }
 });
+
+initSentry();
 
 ReactDOM.render(
   <Router>
