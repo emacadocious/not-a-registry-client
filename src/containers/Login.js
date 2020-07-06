@@ -50,7 +50,7 @@ export default function Login() {
           <FormControl
             type="password"
             value={fields.password}
-            onChange={handleFieldChange2}
+            onChange={handleFieldChange}
           />
         </FormGroup>
         <LoaderButton

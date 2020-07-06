@@ -1,5 +1,7 @@
 import * as Sentry from "@sentry/browser";
 
+const isLocal = process.env.NODE_ENV === "development";
+
 export function onError(error) {
   let errorInfo = {};
   let message = error.toString();
@@ -18,8 +20,6 @@ export function onError(error) {
 
   alert(message);
 }
-
-const isLocal = process.env.NODE_ENV === "development";
 
 export function initSentry() {
   if (isLocal) {
