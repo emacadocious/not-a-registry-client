@@ -18,7 +18,7 @@ export default function Settings() {
   }, []);
 
   function billUser(details) {
-    return API.post("notes", "/billing", {
+    return API.post("items", "/billing", {
       body: details
     });
   }

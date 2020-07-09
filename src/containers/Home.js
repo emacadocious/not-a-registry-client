@@ -6,23 +6,19 @@ import { Link } from "react-router-dom";
 
 import { useAppContext } from "../libs/contextLib";
 import { onError } from "../libs/errorLib";
+import { Banner, Footer } from '../components';
 import "./Home.css";
 
-
 export default function Home() {
-  const [notes, setNotes] = useState([]);
+  const [items, setItems] = useState([]);
   const { isAuthenticated } = useAppContext();
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     async function onLoad() {
-      if (!isAuthenticated) {
-        return;
-      }
-
       try {
-        const notes = await loadNotes();
-        setNotes(notes);
+        const items = await loadItems();
+        setItems(items);
       } catch (e) {
         onError(e);
       }
@@ -33,35 +29,29 @@ export default function Home() {
     onLoad();
   }, [isAuthenticated]);
 
-  function loadNotes() {
-    return API.get("notes", "/notes");
+  function loadItems() {
+    return API.get("items", "/items")
   }
 
-  function renderNotesList(notes) {
-    return [{}].concat(notes).map((note, i) =>
+  function renderItemsList(items) {
+    console.log(items)
+    return [{}].concat(items).map((item, i) =>
       i !== 0 ? (
-        <LinkContainer key={note.noteId} to={`/notes/${note.noteId}`}>
-          <ListGroupItem header={note.content.trim().split("\n")[0]}>
-            {"Created: " + new Date(note.createdAt).toLocaleString()}
+        <LinkContainer key={item.itemId} to={`/items/${item.itemId}`}>
+          <ListGroupItem header={item.title.trim().split("\n")[0]}>
+            {"Created: " + new Date(item.createdAt).toLocaleString()}
           </ListGroupItem>
         </LinkContainer>
-      ) : (
-        <LinkContainer key="new" to="/notes/new">
-          <ListGroupItem>
-            <h4>
-              <b>{"\uFF0B"}</b> Create a new note
-            </h4>
-          </ListGroupItem>
-        </LinkContainer>
-      )
+      ) : ''
     );
   }
 
   function renderLander() {
+
     return (
       <div className="lander">
         <h1>Scratch</h1>
-        <p>A simple note taking app</p>
+        <p>A simple item taking app</p>
         <div>
           <Link to="/login" className="btn btn-info btn-lg">
             Login
@@ -74,12 +64,12 @@ export default function Home() {
     );
   }
 
-  function renderNotes() {
+  function renderItems() {
     return (
-      <div className="notes">
-        <PageHeader>Your Notes</PageHeader>
+      <div className="items">
+        <h1>Your Items</h1>
         <ListGroup>
-          {!isLoading && renderNotesList(notes)}
+          {!isLoading && renderItemsList(items)}
         </ListGroup>
       </div>
     );
@@ -87,7 +77,9 @@ export default function Home() {
 
   return (
     <div className="Home">
-      {isAuthenticated ? renderNotes() : renderLander()}
+      <Banner />
+      {renderItems()}
+      <Footer />
     </div>
   );
 }

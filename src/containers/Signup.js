@@ -1,10 +1,7 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import {
-  HelpBlock,
-  FormGroup,
-  FormControl,
-  ControlLabel
+  Form,
 } from "react-bootstrap";
 import { Auth } from "aws-amplify";
 
@@ -76,16 +73,19 @@ export default function Signup() {
   function renderConfirmationForm() {
     return (
       <form onSubmit={handleConfirmationSubmit}>
-        <FormGroup controlId="confirmationCode" bsSize="large">
-          <ControlLabel>Confirmation Code</ControlLabel>
-          <FormControl
+        <Form.Group controlId="confirmationCode" bsSize="large">
+          <Form.Label>Confirmation Code</Form.Label>
+          <Form.Control
             autoFocus
             type="tel"
             onChange={handleFieldChange}
             value={fields.confirmationCode}
+            aria-describedby="emailHelpBlock"
           />
-          <HelpBlock>Please check your email for the code.</HelpBlock>
-        </FormGroup>
+          <Form.Text id="emailHelpBlock" muted>
+            Please check your email for the code
+          </Form.Text>
+      </Form.Group>
         <LoaderButton
           block
           type="submit"
@@ -102,31 +102,31 @@ export default function Signup() {
   function renderForm() {
     return (
       <form onSubmit={handleSubmit}>
-        <FormGroup controlId="email" bsSize="large">
-          <ControlLabel>Email</ControlLabel>
-          <FormControl
+        <Form.Group controlId="email" bsSize="large">
+          <Form.Label>Email</Form.Label>
+        <Form.Control
             autoFocus
             type="email"
             value={fields.email}
             onChange={handleFieldChange}
           />
-        </FormGroup>
-        <FormGroup controlId="password" bsSize="large">
-          <ControlLabel>Password</ControlLabel>
-          <FormControl
+      </Form.Group>
+        <Form.Group controlId="password" bsSize="large">
+          <Form.Label>Password</Form.Label>
+        <Form.Control
             type="password"
             value={fields.password}
             onChange={handleFieldChange}
           />
-        </FormGroup>
-        <FormGroup controlId="confirmPassword" bsSize="large">
-          <ControlLabel>Confirm Password</ControlLabel>
-          <FormControl
+      </Form.Group>
+        <Form.Group controlId="confirmPassword" bsSize="large">
+          <Form.Label>Confirm Password</Form.Label>
+        <Form.Control
             type="password"
             onChange={handleFieldChange}
             value={fields.confirmPassword}
           />
-        </FormGroup>
+      </Form.Group>
         <LoaderButton
           block
           type="submit"
