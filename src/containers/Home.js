@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { PageHeader, ListGroup, ListGroupItem } from "react-bootstrap";
+import { ListGroup, ListGroupItem } from "react-bootstrap";
 import { LinkContainer } from "react-router-bootstrap";
 import { API } from "aws-amplify";
 import { Link } from "react-router-dom";
 
 import { useAppContext } from "../libs/contextLib";
 import { onError } from "../libs/errorLib";
-import { Banner, Footer } from '../components';
+import { Banner, Footer, Item } from '../components';
 import "./Home.css";
 
 export default function Home() {
@@ -36,31 +36,7 @@ export default function Home() {
   function renderItemsList(items) {
     console.log(items)
     return [{}].concat(items).map((item, i) =>
-      i !== 0 ? (
-        <LinkContainer key={item.itemId} to={`/items/${item.itemId}`}>
-          <ListGroupItem header={item.title.trim().split("\n")[0]}>
-            {"Created: " + new Date(item.createdAt).toLocaleString()}
-          </ListGroupItem>
-        </LinkContainer>
-      ) : ''
-    );
-  }
-
-  function renderLander() {
-
-    return (
-      <div className="lander">
-        <h1>Scratch</h1>
-        <p>A simple item taking app</p>
-        <div>
-          <Link to="/login" className="btn btn-info btn-lg">
-            Login
-          </Link>
-          <Link to="/signup" className="btn btn-success btn-lg">
-            Signup
-          </Link>
-        </div>
-      </div>
+      i !== 0 ? <Item item={item} /> : ''
     );
   }
 
