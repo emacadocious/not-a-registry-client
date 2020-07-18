@@ -12,6 +12,10 @@
   color: #999;
 }
 
+.Home .items {
+  width: 100%;
+}
+
 .Home .items h4 {
   font-family: "Open Sans", sans-serif;
   font-weight: 600;
@@ -29,4 +33,13 @@
 }
 .Home .lander div a:first-child {
   margin-right: 20px;
+}
+
+.main-container {
+  padding: 50px;
+  background-color: #5BE7C4;
+  margin: 25px;
+  text-align: center;
+  box-shadow: 0 0px 16px 1px;
+  border-radius: 25px;
 }

@@ -1,15 +1,17 @@
 import React, { useRef, useState, useEffect } from "react";
 import { useParams, useHistory } from "react-router-dom";
 import { API, Storage } from "aws-amplify";
-import { Form } from "react-bootstrap";
+import { Container, Row, Image, Button, Collapse, Alert } from "react-bootstrap";
 
 import LoaderButton from "../components/LoaderButton";
 import config from "../config";
 import { onError } from "../libs/errorLib";
 import { s3Upload } from "../libs/awsLib";
-import "./Items.css";
+import Settings from './Settings';
+import { currencyFormatter } from '../libs/currencyLib';
+import "./SingleItem.css";
 
-export default function Items() {
+export default function SingleItem() {
   const file = useRef(null);
   const { id } = useParams();
   const history = useHistory();
@@ -17,6 +19,7 @@ export default function Items() {
   const [content, setContent] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
+  const [open, setOpen] = useState(false);
 
   useEffect(() => {
     function loadNote() {
@@ -34,7 +37,9 @@ export default function Items() {
 
         setContent(content);
         setNote(note);
+        console.log(note)
       } catch (e) {
+        console.log(e);
         onError(e);
       }
     }
@@ -87,6 +92,7 @@ export default function Items() {
       });
       history.push("/");
     } catch (e) {
+      console.log(e)
       onError(e);
       setIsLoading(false);
     }
@@ -119,54 +125,46 @@ export default function Items() {
   }
 
   return (
-    <div className="Items">
+    <div>
       {note && (
-        <form onSubmit={handleSubmit}>
-          <Form.Group controlId="content">
-            <Form.Control
-              value={content}
-              componentClass="textarea"
-              onChange={e => setContent(e.target.value)}
+        <Container className="single-item">
+          <Row className="justify-content-md-center">
+            <span className="item-title ">{note.title}</span>
+          </Row>
+          <Row>
+            <span className="item-description">
+              <Button
+                onClick={() => setOpen(!open)}
+                aria-controls="example-collapse-text"
+                aria-expanded={open}
+              >
+                See Description
+              </Button>
+              <Collapse in={open}>
+                <div id="example-collapse-text">
+                  {note.description}
+                </div>
+              </Collapse>
+            </span>
+          </Row>
+          <Row className="justify-content-md-center">
+            <Image
+              src={note.imageUrl}
+              className="item-image"
             />
-        </Form.Group>
-          {note.attachment && (
-            <Form.Group>
-              <Form.Label>Attachment</Form.Label>
-            <Form.Control.Static>
-                <a
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  href={note.attachmentURL}
-                >
-                  {formatFilename(note.attachment)}
-                </a>
-              </Form.Control.Static>
-            </Form.Group>
-          )}
-          <Form.Group controlId="file">
-            {!note.attachment && <Form.Label>Attachment</Form.Label>}
-            <Form.Control onChange={handleFileChange} type="file" />
-        </Form.Group>
-          <LoaderButton
-            block
-            type="submit"
-            bsSize="large"
-            bsStyle="primary"
-            isLoading={isLoading}
-            disabled={!validateForm()}
-          >
-            Save
-          </LoaderButton>
-          <LoaderButton
-            block
-            bsSize="large"
-            bsStyle="danger"
-            onClick={handleDelete}
-            isLoading={isDeleting}
-          >
-            Delete
-          </LoaderButton>
-        </form>
+          </Row>
+          <Row className="justify-content-md-center item-price">
+            <Alert variant="success">
+              <Alert.Heading>{currencyFormatter(note.price)}</Alert.Heading>
+              <hr />
+              <p>
+                Whenever you need to, be sure to use margin utilities to keep things nice
+                and tidy.
+              </p>
+            </Alert>
+          </Row>
+          <Settings />
+        </Container>
       )}
     </div>
   );

@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { ListGroup, ListGroupItem } from "react-bootstrap";
-import { LinkContainer } from "react-router-bootstrap";
+import { CardDeck, Container, Row } from "react-bootstrap";
 import { API } from "aws-amplify";
-import { Link } from "react-router-dom";
+import Fade from 'react-reveal/Fade';
 
 import { useAppContext } from "../libs/contextLib";
 import { onError } from "../libs/errorLib";
-import { Banner, Footer, Item } from '../components';
+import { Banner, Item } from '../components';
 import "./Home.css";
 
 export default function Home() {
@@ -36,17 +35,17 @@ export default function Home() {
   function renderItemsList(items) {
     console.log(items)
     return [{}].concat(items).map((item, i) =>
-      i !== 0 ? <Item item={item} /> : ''
+      i !== 0 ? <Item key={i} item={item} /> : ''
     );
   }
 
   function renderItems() {
     return (
       <div className="items">
-        <h1>Your Items</h1>
-        <ListGroup>
+        <h1>Your SingleItem</h1>
+        <CardDeck>
           {!isLoading && renderItemsList(items)}
-        </ListGroup>
+        </CardDeck>
       </div>
     );
   }
@@ -54,8 +53,15 @@ export default function Home() {
   return (
     <div className="Home">
       <Banner />
-      {renderItems()}
-      <Footer />
+      <div className="main-container">
+        <Fade bottom>
+          <Container>
+            <Row>
+              {renderItems()}
+            </Row>
+          </Container>
+          </Fade>
+      </div>
     </div>
   );
 }

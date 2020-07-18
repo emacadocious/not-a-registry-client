@@ -5,7 +5,7 @@ import { AppContext } from "./libs/contextLib";
 import { onError } from "./libs/errorLib";
 import Routes from "./Routes";
 import { Nav } from './containers';
-import ErrorBoundary from "./components/ErrorBoundary";
+import { Footer, ErrorBoundary } from './components';
 
 function App() {
   const [isAuthenticated, userHasAuthenticated] = useState(false);
@@ -44,6 +44,7 @@ function App() {
             <Routes />
           </AppContext.Provider>
         </ErrorBoundary>
+        <Footer />
       </div>
     )
   );

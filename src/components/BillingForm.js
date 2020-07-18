@@ -37,7 +37,7 @@ function BillingForm({ isLoading, onSubmit, ...props }) {
 
   return (
     <form className="BillingForm" onSubmit={handleSubmitClick}>
-      <Form.Group bsSize="large" controlId="storage">
+      <Form.Group controlId="storage">
         <Form.Label>Storage</Form.Label>
         <Form.Control
           min="0"
@@ -48,7 +48,7 @@ function BillingForm({ isLoading, onSubmit, ...props }) {
         />
     </Form.Group>
       <hr />
-    <Form.Group bsSize="large" controlId="name">
+    <Form.Group controlId="name">
         <Form.Label>Cardholder&apos;s name</Form.Label>
         <Form.Control
           type="text"
@@ -68,7 +68,6 @@ function BillingForm({ isLoading, onSubmit, ...props }) {
       <LoaderButton
         block
         type="submit"
-        bsSize="large"
         isLoading={isLoading}
         disabled={!validateForm()}
       >

@@ -57,15 +57,12 @@ export default function NewNote() {
   }
 
   return (
-    <div className="NewNote">
+    <div className="new-item">
       <form onSubmit={handleSubmit}>
-        <Form.Group controlId="content">
-          <Form.Control
-            value={content}
-            componentClass="textarea"
-            onChange={e => setContent(e.target.value)}
-          />
-      </Form.Group>
+        <Form.Group controlId="ControlTextarea1">
+          <Form.Label>Example textarea</Form.Label>
+          <Form.Control as="textarea" rows="3" />
+        </Form.Group>
         <Form.Group controlId="file">
           <Form.Label>Attachment</Form.Label>
         <Form.Control onChange={handleFileChange} type="file" />
@@ -73,8 +70,6 @@ export default function NewNote() {
         <LoaderButton
           block
           type="submit"
-          bsSize="large"
-          bsStyle="primary"
           isLoading={isLoading}
           disabled={!validateForm()}
         >

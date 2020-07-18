@@ -6,7 +6,7 @@ export default function MainNav() {
 
   return (
     <Navbar bg="dark" variant="dark" className="app-navigation">
-      <Navbar.Brand href="#home">
+      <Navbar.Brand href="/">
        Something in the nav
       </Navbar.Brand>
     </Navbar>

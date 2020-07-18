@@ -1,6 +1,6 @@
 import React from "react";
 import { Route, Switch } from "react-router-dom";
-import { Home, NotFound, Login, Signup, NewNote, Items, Settings } from "./containers";
+import { Home, NotFound, Login, Signup, NewNote, SingleItem, Settings } from "./containers";
 import { AuthenticatedRoute, UnauthenticatedRoute } from "./components";
 
 export default function Routes() {
@@ -18,9 +18,12 @@ export default function Routes() {
       <AuthenticatedRoute exact path="/settings">
         <Settings />
       </AuthenticatedRoute>
-      <UnauthenticatedRoute exact path="/items/:id">
-        <Items />
-      </UnauthenticatedRoute>
+      <AuthenticatedRoute exact path="/notes/new">
+        <NewNote />
+      </AuthenticatedRoute>
+      <Route exact path="/items/:id">
+        <SingleItem />
+      </Route>
       <Route>
         <NotFound />
       </Route>
