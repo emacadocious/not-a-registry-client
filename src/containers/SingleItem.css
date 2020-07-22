@@ -1,3 +1,7 @@
+.row {
+  justify-content: center;
+}
+
 .single-item {
   padding: 50px;
   background-color: #e6e6e4;
@@ -5,6 +9,7 @@
   text-align: center;
   box-shadow: 0 0px 16px 1px;
   border-radius: 25px;
+  justify-content: center;
 }
 
 .item-title {
@@ -35,4 +40,23 @@
   padding: 15px;
   color: green;
   text-align: center;
+}
+
+.item-input {
+  width: 50%;
+  display: block;
+  margin: 25px;
+}
+
+.item-is-purchased {
+  margin: 100px 25px 50px;
+}
+
+.item-is-purchased button {
+  padding: 25px;
+  margin: 15px;
+}
+
+.item-submit {
+  margin: 50px;
 }

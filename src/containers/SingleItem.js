@@ -1,7 +1,7 @@
 import React, { useRef, useState, useEffect } from "react";
 import { useParams, useHistory } from "react-router-dom";
 import { API, Storage } from "aws-amplify";
-import { Container, Row, Image, Button, Collapse, Alert } from "react-bootstrap";
+import { Container, Row, Image, Button, Collapse, Alert, Form, Col } from "react-bootstrap";
 
 import LoaderButton from "../components/LoaderButton";
 import config from "../config";
@@ -10,6 +10,9 @@ import { s3Upload } from "../libs/awsLib";
 import Settings from './Settings';
 import { currencyFormatter } from '../libs/currencyLib';
 import "./SingleItem.css";
+
+const SHOW_PURCHASE = 'SHOW_PURCHASE';
+const SHOW_ALREADY_PURCHASED = 'SHOW_ALREADY_PURCHASED';
 
 export default function SingleItem() {
   const file = useRef(null);
@@ -20,6 +23,10 @@ export default function SingleItem() {
   const [isLoading, setIsLoading] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
   const [open, setOpen] = useState(false);
+  const [verify, setVerify] = useState(false);
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  let [showRender, setPurchase] = useState("false");
 
   useEffect(() => {
     function loadNote() {
@@ -60,6 +67,7 @@ export default function SingleItem() {
   }
 
   function saveNote(note) {
+    console.log(note)
     return API.put("items", `/items/${id}`, {
       body: note
     });
@@ -86,9 +94,13 @@ export default function SingleItem() {
         attachment = await s3Upload(file.current);
       }
 
+      console.log(content)
+
       await saveNote({
-        content,
-        attachment: attachment || note.attachment
+        firstName,
+        lastName,
+        available: false,
+        purchased: true
       });
       history.push("/");
     } catch (e) {
@@ -124,11 +136,94 @@ export default function SingleItem() {
     }
   }
 
+  function renderPurchaseOrAlreadyPurchased() {
+    return (
+      <div className="item-is-purchased">
+        <Button
+          variant="primary"
+          size="lg"
+          onClick={() => setPurchase(showRender = SHOW_PURCHASE)}
+        >
+          I want to purchase this item
+        </Button>{' '}
+        <Button
+          variant="primary"
+          size="lg"
+          onClick={() => setPurchase(showRender = SHOW_ALREADY_PURCHASED)}
+        >
+          I have already purchased this item.
+        </Button>{' '}
+      </div>
+    )
+  }
+
+  function renderPurchase() {
+    return (
+      <div>
+        <Settings />
+      </div>
+    );
+  }
+
+  function renderAlreadyPurchased() {
+    return (
+      <div>
+        <Form onSubmit={handleSubmit}>
+          <Form.Group>
+            <Row>
+              <Form.Control
+                placeholder="First name"
+                className="item-input"
+                onChange={e => setFirstName(e.target.value)}
+                size="lg"
+              />
+            </Row>
+            <Row>
+              <Form.Control
+                placeholder="Last name"
+                className="item-input"
+                onChange={e => setLastName(e.target.value)}
+                size="lg"
+              />
+            </Row>
+            <Row>
+              <Form.Check
+                label="I have already purchased this item."
+                type="checkbox"
+                id="checkbox-1"
+                onClick={() => setVerify(!verify)}
+              />
+            </Row>
+            <Row>
+              <Button
+                variant="primary"
+                size="lg"
+                className="item-submit"
+                type="submit"
+                disabled={(!verify)}
+              >
+                Submit
+              </Button>
+            </Row>
+          </Form.Group>
+        </Form>
+      </div>
+    );
+  }
+
+  let renderMarkerup = "";
+  if (showRender === SHOW_PURCHASE) {
+    renderMarkerup = renderPurchase();
+  }
+  if (showRender === SHOW_ALREADY_PURCHASED) {
+    renderMarkerup = renderAlreadyPurchased();
+  }
+
   return (
     <div>
       {note && (
         <Container className="single-item">
-          <Row className="justify-content-md-center">
+          <Row>
             <span className="item-title ">{note.title}</span>
           </Row>
           <Row>
@@ -147,13 +242,13 @@ export default function SingleItem() {
               </Collapse>
             </span>
           </Row>
-          <Row className="justify-content-md-center">
+          <Row>
             <Image
               src={note.imageUrl}
               className="item-image"
             />
           </Row>
-          <Row className="justify-content-md-center item-price">
+          <Row className="item-price">
             <Alert variant="success">
               <Alert.Heading>{currencyFormatter(note.price)}</Alert.Heading>
               <hr />
@@ -163,7 +258,8 @@ export default function SingleItem() {
               </p>
             </Alert>
           </Row>
-          <Settings />
+          {renderPurchaseOrAlreadyPurchased()}
+          {renderMarkerup}
         </Container>
       )}
     </div>

@@ -20,11 +20,22 @@ export default function Item({ item }) {
         </div>
       </Card.Body>
       <Card.Footer>
-      <Link to={`/items/${item.itemId}`}>
-        <Button>
-          Purchase
-        </Button>
-      </Link>
+      {
+        item.available ?
+          (
+            <Link to={`/items/${item.itemId}`}>
+              <Button variant="success">
+                Purchase
+              </Button>
+            </Link>
+          ) :
+          (
+            <Button variant="danger">
+              Not available
+            </Button>
+          )
+      }
+
       </Card.Footer>
     </Card>
   );
