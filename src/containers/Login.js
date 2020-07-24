@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { Auth } from "aws-amplify";
 import { Form } from "react-bootstrap";
+import { Link } from "react-router-dom";
+
 import LoaderButton from "../components/LoaderButton";
 import { useAppContext } from "../libs/contextLib";
 import { useFormFields } from "../libs/hooksLib";
@@ -36,7 +38,7 @@ export default function Login() {
   return (
     <div className="Login">
       <form onSubmit={handleSubmit}>
-        <Form.Group controlId="email" bsSize="large">
+        <Form.Group controlId="email" size="large">
           <Form.Label>Email</Form.Label>
         <Form.Control
             autoFocus
@@ -45,7 +47,7 @@ export default function Login() {
             onChange={handleFieldChange}
           />
       </Form.Group>
-        <Form.Group controlId="password" bsSize="large">
+        <Form.Group controlId="password" size="large">
           <Form.Label>Password</Form.Label>
         <Form.Control
             type="password"
@@ -53,10 +55,11 @@ export default function Login() {
             onChange={handleFieldChange}
           />
       </Form.Group>
+      <Link to="/login/reset">Forgot password?</Link>
         <LoaderButton
           block
           type="submit"
-          bsSize="large"
+          size="large"
           isLoading={isLoading}
           disabled={!validateForm()}
         >

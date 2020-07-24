@@ -1,0 +1,12 @@
+body {
+  background-color: white
+}
+
+.app-navigation {
+  background-color: #B7A075;
+}
+
+.nav-link {
+  font-weight: bolder;
+  color: white;
+}

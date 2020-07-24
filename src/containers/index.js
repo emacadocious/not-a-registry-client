@@ -5,4 +5,4 @@ export { default as Signup } from './Signup';
 export { default as NewNote } from './NewNote';
 export { default as SingleItem } from './SingleItem';
 export { default as Settings } from './Settings';
-export { default as Nav } from './Nav';
+export { default as ResetPassword } from './ResetPassword';

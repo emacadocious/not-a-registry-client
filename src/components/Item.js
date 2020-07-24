@@ -6,13 +6,10 @@ import { currencyFormatter } from '../libs/currencyLib';
 import './Item.css';
 
 export default function Item({ item }) {
-  let url = '';
-  if (item.imageUrl) {
-    url = item.imageUrl;
-  }
+  const baseUrl = 'https://not-a-registry-api-dev-attachmentsbucket-udlpoklq6y1f.s3.amazonaws.com/private/us-east-1%3A9217774f-4e9d-4d87-a84c-e8526bb05d23/';
   return (
     <Card>
-      <Card.Img variant="top" src={url} />
+      <Card.Img variant="top" src={baseUrl + item.attachment} />
       <Card.Body>
         <Card.Title>{item.title}</Card.Title>
         <div>
@@ -21,18 +18,13 @@ export default function Item({ item }) {
       </Card.Body>
       <Card.Footer>
       {
-        item.available ?
+
           (
             <Link to={`/items/${item.itemId}`}>
               <Button variant="success">
                 Purchase
               </Button>
             </Link>
-          ) :
-          (
-            <Button variant="danger">
-              Not available
-            </Button>
           )
       }
 

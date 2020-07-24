@@ -7,23 +7,29 @@ import LoaderButton from "../components/LoaderButton";
 import { onError } from "../libs/errorLib";
 import { s3Upload } from "../libs/awsLib";
 import config from "../config";
+import { useInput } from "../libs/inputHookLib";
 import "./NewNote.css";
 
 export default function NewNote() {
   const file = useRef(null);
   const history = useHistory();
-  const [content, setContent] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const { value:itemTitle, bind:bindItemTitle, reset:resetItemTitle } = useInput('');
+  const { value:itemDescription, bind:bindItemDescription, reset:resetItemDescription } = useInput('');
+  const { value:itemPrice, bind:bindItemPrice, reset:resetItemPrice } = useInput(0);
+  const { value:purchaseDate, bind:bindPurchaseDate, reset:resetPurchaseDate} = useInput('');
+  const { value:isAvailable, bind:bindIsAvailable, reset:resetBindIsAvailable } = useInput('');
+  const { value:purchasedBy, bind:bindPurchasedBy, reset:resetBindPurchasedBy } = useInput('');
 
   function validateForm() {
-    return content.length > 0;
+    return itemTitle.length > 0 && itemDescription.length > 0;
   }
 
   function handleFileChange(event) {
     file.current = event.target.files[0];
   }
 
-  async function handleSubmit(event) {
+  async function handleSubmit2(event) {
     event.preventDefault();
 
     if (file.current && file.current.size > config.MAX_ATTACHMENT_SIZE) {
@@ -40,7 +46,15 @@ export default function NewNote() {
     try {
       const attachment = file.current ? await s3Upload(file.current) : null;
 
-      await createNote({ content, attachment });
+      await createNote({
+        itemTitle,
+        itemDescription,
+        itemPrice,
+        purchaseDate,
+        isAvailable: isAvailable === "True",
+        purchasedBy,
+        attachment
+      });
       history.push("/");
     } catch (e) {
       console.log(e)
@@ -53,19 +67,57 @@ export default function NewNote() {
   function createNote(note) {
     return API.post("items", "/items", {
       body: note
-    });
+    })
   }
 
   return (
     <div className="new-item">
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit2}>
         <Form.Group controlId="ControlTextarea1">
-          <Form.Label>Example textarea</Form.Label>
-          <Form.Control as="textarea" rows="3" />
+          <Form.Label>Item Title</Form.Label>
+          <Form.Control
+            type="text"
+            {...bindItemTitle}
+          />
+          <Form.Label>Item Description</Form.Label>
+          <Form.Control
+            as="textarea"
+            rows="3"
+            {...bindItemDescription}
+          />
+          <Form.Label>Item Price</Form.Label>
+          <Form.Control
+            type="number"
+            {...bindItemPrice}
+          />
+          <Form.Label>Purchase Date</Form.Label>
+          <Form.Control
+            type="text"
+            placeholder="MM/DD/YYYY"
+            {...bindPurchaseDate}
+          />
+          <Form.Label>Available</Form.Label>
+          <Form.Control
+            as="select"
+            defaultValue="Choose..."
+            {...bindIsAvailable}
+          >
+            <option>True</option>
+            <option>False</option>
+          </Form.Control>
+          <Form.Label>Purchased By</Form.Label>
+          <Form.Control
+            type="text"
+            placeholder="Whoever purchased this item"
+            {...bindPurchasedBy}
+          />
         </Form.Group>
         <Form.Group controlId="file">
           <Form.Label>Attachment</Form.Label>
-        <Form.Control onChange={handleFileChange} type="file" />
+        <Form.Control
+          onChange={handleFileChange}
+          type="file"
+        />
       </Form.Group>
         <LoaderButton
           block

@@ -1,8 +1,9 @@
 .blog-footer {
   padding: 2.5rem 0;
-  color: #999;
+  color: white;
+  font-weight: bolder;
   text-align: center;
-  background-color: #001358;
+  background-color: #B7A075;
   border-top: .05rem solid #e5e5e5;
   width: 100%;
 }

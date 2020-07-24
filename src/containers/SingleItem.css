@@ -17,29 +17,13 @@
   padding: 20px;
 }
 
-.item-description {
-  font-style: italic;
-  font-size: 1.25em;
-  padding: 25px;
-  width: 100%;
-}
-
 .item-image {
   width: auto;
-  max-height: 350px;
 }
 
 .item-price {
   margin-top: 25px;
   width: 100%;
-}
-
-.alert-heading {
-  margin-top: 25px;
-  font-size: 2.5em;
-  padding: 15px;
-  color: green;
-  text-align: center;
 }
 
 .item-input {
@@ -49,14 +33,14 @@
 }
 
 .item-is-purchased {
-  margin: 100px 25px 50px;
-}
-
-.item-is-purchased button {
-  padding: 25px;
-  margin: 15px;
+  margin: 50px 0;
 }
 
 .item-submit {
   margin: 50px;
+}
+
+.item-details button {
+  width: 100%;
+  margin: 25px 0;
 }

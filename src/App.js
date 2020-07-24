@@ -1,13 +1,17 @@
 import React, { useState, useEffect } from "react";
 import { Auth } from "aws-amplify";
+import { Navbar, Nav } from "react-bootstrap";
+import { useHistory } from "react-router-dom";
 
 import { AppContext } from "./libs/contextLib";
 import { onError } from "./libs/errorLib";
 import Routes from "./Routes";
-import { Nav } from './containers';
 import { Footer, ErrorBoundary } from './components';
+import "./App.css";
 
 function App() {
+
+  const history = useHistory();
   const [isAuthenticated, userHasAuthenticated] = useState(false);
   const [isAuthenticating, setIsAuthenticating] = useState(true);
 
@@ -33,12 +37,36 @@ function App() {
     await Auth.signOut();
 
     userHasAuthenticated(false);
+
+    history.push("/login");
+  }
+
+  function renderNav() {
+    return (
+      <Navbar className="app-navigation">
+        <Navbar.Brand href="/">Navbar with text</Navbar.Brand>
+        <Navbar.Toggle />
+        <Navbar.Collapse className="justify-content-end">
+        {
+          isAuthenticated ? (
+            <Nav.Link onClick={handleLogout}>Logout</Nav.Link>
+          ) :
+            (
+              <React.Fragment>
+                <Nav.Link href="/login">Login</Nav.Link>
+                <Nav.Link href="/signup">Signup</Nav.Link>
+              </React.Fragment>
+            )
+          }
+        </Navbar.Collapse>
+      </Navbar>
+    );
   }
 
   return (
     !isAuthenticating && (
       <div className="app">
-        <Nav />
+        {renderNav()}
         <ErrorBoundary>
           <AppContext.Provider value={{ isAuthenticated, userHasAuthenticated }}>
             <Routes />
