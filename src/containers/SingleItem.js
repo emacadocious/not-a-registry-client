@@ -16,9 +16,9 @@ export default function SingleItem() {
   const { id } = useParams();
   const history = useHistory();
   const [item, setItem] = useState(null);
-  const [content, setContent] = useState("");
+  // const [content, setContent] = useState("");
   const [isPageLoading, setIsPageLoading] = useState(true);
-  const [isLoading, setIsLoading] = useState(false);
+  // const [isLoading, setIsLoading] = useState(false);
   const [open, setOpen] = useState(false);
   const [verify, setVerify] = useState(false);
   const [firstName, setFirstName] = useState("");
@@ -33,13 +33,13 @@ export default function SingleItem() {
     async function onLoad() {
       try {
         const item = await loadNote();
-        const { content, attachment } = item;
+        const { attachment } = item;
 
         if (attachment) {
           item.attachmentURL = await Storage.vault.get(attachment);
         }
 
-        setContent(content);
+        // setContent(content);
         setItem(item);
         setIsPageLoading(false);
       } catch (e) {
@@ -60,7 +60,7 @@ export default function SingleItem() {
   async function handleSubmit(event) {
     event.preventDefault();
 
-    setIsLoading(true);
+    // setIsLoading(true);
 
     try {
       await saveNote({
@@ -73,7 +73,7 @@ export default function SingleItem() {
     } catch (e) {
       console.log(e)
       onError(e);
-      setIsLoading(false);
+      // setIsLoading(false);
     }
   }
 
