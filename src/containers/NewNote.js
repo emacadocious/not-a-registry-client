@@ -1,5 +1,4 @@
 import React, { useRef, useState } from "react";
-import { useHistory } from "react-router-dom";
 import { Form } from "react-bootstrap";
 import { API } from "aws-amplify";
 
@@ -12,13 +11,12 @@ import "./NewNote.css";
 
 export default function NewNote() {
   const file = useRef(null);
-  const history = useHistory();
   const [isLoading, setIsLoading] = useState(false);
   const { value:itemTitle, bind:bindItemTitle, reset:resetItemTitle } = useInput('');
   const { value:itemDescription, bind:bindItemDescription, reset:resetItemDescription } = useInput('');
   const { value:itemPrice, bind:bindItemPrice, reset:resetItemPrice } = useInput(0);
   const { value:purchaseDate, bind:bindPurchaseDate, reset:resetPurchaseDate} = useInput('');
-  const { value:isAvailable, bind:bindIsAvailable, reset:resetBindIsAvailable } = useInput('');
+  const { value:isAvailable, bind:bindIsAvailable, reset:resetBindIsAvailable } = useInput(true);
   const { value:purchasedBy, bind:bindPurchasedBy, reset:resetBindPurchasedBy } = useInput('');
 
   function validateForm() {
@@ -51,11 +49,17 @@ export default function NewNote() {
         itemDescription,
         itemPrice,
         purchaseDate,
-        isAvailable: isAvailable === "True",
+        isAvailable: isAvailable === true,
         purchasedBy,
         attachment
       });
-      history.push("/");
+      alert('Item successfully created.');
+      resetItemTitle();
+      resetItemDescription()
+      resetItemPrice()
+      resetPurchaseDate()
+      resetBindIsAvailable()
+      resetBindPurchasedBy()
     } catch (e) {
       console.log(e)
       onError(e);
@@ -69,6 +73,7 @@ export default function NewNote() {
       body: note
     })
   }
+
 
   return (
     <div className="new-item">
@@ -99,11 +104,10 @@ export default function NewNote() {
           <Form.Label>Available</Form.Label>
           <Form.Control
             as="select"
-            defaultValue="Choose..."
             {...bindIsAvailable}
           >
-            <option>True</option>
-            <option>False</option>
+            <option value={true}>True</option>
+            <option value={false}>False</option>
           </Form.Control>
           <Form.Label>Purchased By</Form.Label>
           <Form.Control

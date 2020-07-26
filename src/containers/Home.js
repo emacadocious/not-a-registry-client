@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { CardDeck, Container, Row } from "react-bootstrap";
+import { CardDeck, CardColumns, Container, Row } from "react-bootstrap";
 import { API } from "aws-amplify";
 import Fade from 'react-reveal/Fade';
 
@@ -33,7 +33,6 @@ export default function Home() {
   }
 
   function renderItemsList(items) {
-    console.log(items)
     return [{}].concat(items).map((item, i) =>
       i !== 0 ? <Item key={i} item={item} /> : ''
     );
@@ -42,9 +41,11 @@ export default function Home() {
   function renderItems() {
     return (
       <div className="items">
-        <h1>Your SingleItem</h1>
+        <h1>Items</h1>
         <CardDeck>
-          {!isLoading && renderItemsList(items)}
+          <CardColumns>
+            {!isLoading && renderItemsList(items)}
+          </CardColumns>
         </CardDeck>
       </div>
     );

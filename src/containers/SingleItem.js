@@ -1,12 +1,10 @@
-import React, { useRef, useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useParams, useHistory } from "react-router-dom";
 import { API, Storage } from "aws-amplify";
 import { Container, Row, Image, Button, Collapse, Form, Col } from "react-bootstrap";
 
 import { LoaderComponent } from "../components";
-import config from "../config";
 import { onError } from "../libs/errorLib";
-import { s3Upload } from "../libs/awsLib";
 import Settings from './Settings';
 import { currencyFormatter } from '../libs/currencyLib';
 import "./SingleItem.css";
@@ -17,7 +15,7 @@ const SHOW_ALREADY_PURCHASED = 'SHOW_ALREADY_PURCHASED';
 export default function SingleItem() {
   const { id } = useParams();
   const history = useHistory();
-  const [note, setNote] = useState(null);
+  const [item, setItem] = useState(null);
   const [content, setContent] = useState("");
   const [isPageLoading, setIsPageLoading] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
@@ -34,15 +32,15 @@ export default function SingleItem() {
 
     async function onLoad() {
       try {
-        const note = await loadNote();
-        const { content, attachment } = note;
+        const item = await loadNote();
+        const { content, attachment } = item;
 
         if (attachment) {
-          note.attachmentURL = await Storage.vault.get(attachment);
+          item.attachmentURL = await Storage.vault.get(attachment);
         }
 
         setContent(content);
-        setNote(note);
+        setItem(item);
         setIsPageLoading(false);
       } catch (e) {
         console.log(e);
@@ -53,10 +51,9 @@ export default function SingleItem() {
     onLoad();
   }, [id]);
 
-  function saveNote(note) {
-    console.log(note)
+  function saveNote(item) {
     return API.put("items", `/items/${id}`, {
-      body: note
+      body: item
     });
   }
 
@@ -89,14 +86,14 @@ export default function SingleItem() {
           onClick={() => setPurchase(showRender = SHOW_PURCHASE)}
         >
           I want to purchase this item
-        </Button>{' '}
+        </Button>
         <Button
           variant="success"
           size="lg"
           onClick={() => setPurchase(showRender = SHOW_ALREADY_PURCHASED)}
         >
           I have already purchased this item.
-        </Button>{' '}
+        </Button>
       </div>
     )
   }
@@ -163,17 +160,19 @@ export default function SingleItem() {
     renderMarkerup = renderAlreadyPurchased();
   }
 
+  console.log(item)
+
   return (
     <div className="single-item-wrapper">
-      {!isPageLoading ? note && (
+      {!isPageLoading ? item && (
         <Container className="single-item">
           <Row>
-            <h1>{note.title}</h1>
+            <h1>{item.title}</h1>
           </Row>
           <Row>
             <Col md={6} sm={12} className="mb-5">
               <Image
-                src={note.imageUrl}
+                src={item.attachmentURL}
                 className="item-image"
                 fluid
               />
@@ -191,12 +190,12 @@ export default function SingleItem() {
                 </Button>
                 <Collapse in={open}>
                   <div id="example-collapse-text">
-                    {note.description}
+                    {item.description}
                   </div>
                 </Collapse>
               </span>
               <Row className="item-price">
-                <h2>{currencyFormatter(note.price)}</h2>
+                <h2>{currencyFormatter(item.price)}</h2>
               </Row>
               {renderPurchaseOrAlreadyPurchased()}
             </Col>

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useHistory } from "react-router-dom";
+import { useHistory, useParams} from "react-router-dom";
 import { API } from "aws-amplify";
 import { Elements, StripeProvider } from "react-stripe-elements";
 
@@ -10,6 +10,7 @@ import "./Settings.css";
 
 export default function Settings() {
   const history = useHistory();
+  const { id } = useParams();
   const [isLoading, setIsLoading] = useState(false);
   const [stripe, setStripe] = useState(null);
 
@@ -21,6 +22,12 @@ export default function Settings() {
     console.log(details)
     return API.post("items", "/billing", {
       body: details
+    });
+  }
+
+  function saveNote(note) {
+    return API.put("items", `/items/${id}`, {
+      body: note
     });
   }
 
@@ -36,6 +43,13 @@ export default function Settings() {
       await billUser({
         storage,
         source: token.id
+      });
+
+      await saveNote({
+        firstName: "from UI",
+        lastName: "from UI",
+        available: false,
+        purchased: true
       });
 
       alert("Your card has been charged successfully!");

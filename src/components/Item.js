@@ -2,30 +2,34 @@ import React from 'react';
 import { Card, Button } from 'react-bootstrap';
 import { Link } from "react-router-dom";
 
+import config from "../config";
 import { currencyFormatter } from '../libs/currencyLib';
 import './Item.css';
 
+
 export default function Item({ item }) {
-  const baseUrl = 'https://not-a-registry-api-dev-attachmentsbucket-udlpoklq6y1f.s3.amazonaws.com/private/us-east-1%3A9217774f-4e9d-4d87-a84c-e8526bb05d23/';
+  const baseUrl = `https://${config.s3.BUCKET}.s3.amazonaws.com/public/${item.attachment}`;
   return (
     <Card>
-      <Card.Img variant="top" src={baseUrl + item.attachment} />
+      <Card.Img variant="top" src={baseUrl} />
       <Card.Body>
         <Card.Title>{item.title}</Card.Title>
         <div>
-          <span className="item-price">{currencyFormatter(10)}</span>
+          <span className="item-price">{currencyFormatter(Number(item.price))}</span>
         </div>
       </Card.Body>
       <Card.Footer>
       {
-
-          (
-            <Link to={`/items/${item.itemId}`}>
-              <Button variant="success">
-                Purchase
-              </Button>
-            </Link>
-          )
+        item.available ?
+          <Link to={`/items/${item.itemId}`}>
+            <Button variant="success">
+              Purchase
+            </Button>
+          </Link>
+          :
+          <Button variant="danger">
+            Already Purchased
+          </Button>
       }
 
       </Card.Footer>
