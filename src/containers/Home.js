@@ -51,6 +51,8 @@ export default function Home() {
     );
   }
 
+  console.log(items);
+
   return (
     <div className="Home">
       <Banner />
