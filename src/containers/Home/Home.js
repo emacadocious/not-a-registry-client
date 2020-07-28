@@ -3,9 +3,9 @@ import { CardDeck, CardColumns, Container, Row } from "react-bootstrap";
 import { API } from "aws-amplify";
 import Fade from 'react-reveal/Fade';
 
-import { useAppContext } from "../libs/contextLib";
-import { onError } from "../libs/errorLib";
-import { Banner, Item, About } from '../components';
+import { useAppContext } from "../../libs/contextLib";
+import { onError } from "../../libs/errorLib";
+import { Banner, Item, About } from '../../components';
 import "./Home.css";
 
 export default function Home() {

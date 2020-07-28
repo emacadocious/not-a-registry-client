@@ -1,12 +1,11 @@
 import React, { useState } from "react";
 import { Auth } from "aws-amplify";
 import { Link } from "react-router-dom";
-import {
-  Form
-} from "react-bootstrap";
-import LoaderButton from "../components/LoaderButton";
-import { useFormFields } from "../libs/hooksLib";
-import { onError } from "../libs/errorLib";
+import { Form } from "react-bootstrap";
+
+import { LoaderButton } from "../../components";
+import { useFormFields } from "../../libs/hooksLib";
+import { onError } from "../../libs/errorLib";
 import "./ResetPassword.css";
 
 export default function ResetPassword() {

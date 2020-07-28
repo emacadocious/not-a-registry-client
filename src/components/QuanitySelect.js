@@ -1,7 +1,6 @@
 import React from "react";
 import { Form } from "react-bootstrap";
 import { useAppContext } from "../libs/contextLib";
-import "./LoaderButton.css";
 
 export default function LoaderButton({
   isLoading,

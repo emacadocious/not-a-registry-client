@@ -3,12 +3,12 @@ import { useParams, useHistory } from "react-router-dom";
 import { API, Storage } from "aws-amplify";
 import { Container, Row, Image, Button, Collapse, Form, Col } from "react-bootstrap";
 
-import config from "../config";
-import { LoaderComponent, QuanitySelect } from "../components";
-import { onError } from "../libs/errorLib";
-import Settings from './Settings';
-import { currencyFormatter } from '../libs/currencyLib';
-import { AppContext } from "../libs/contextLib";
+import config from "../../config";
+import { LoaderComponent, QuanitySelect } from "../../components";
+import { onError } from "../../libs/errorLib";
+import { Settings } from '../';
+import { currencyFormatter } from '../../libs/currencyLib';
+import { AppContext } from "../../libs/contextLib";
 import "./SingleItem.css";
 
 const SHOW_PURCHASE = 'SHOW_PURCHASE';

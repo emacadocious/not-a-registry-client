@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Form } from "react-bootstrap";
 import { CardElement, injectStripe } from "react-stripe-elements";
-import LoaderButton from "./LoaderButton";
+import { LoaderButton } from "../";
 import "./BillingForm.css";
 
 function BillingForm({ isLoading, onSubmit, handleFieldChange, name, ...props }) {

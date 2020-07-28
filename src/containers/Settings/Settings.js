@@ -2,12 +2,12 @@ import React, { useState, useEffect } from "react";
 import { useHistory, useParams} from "react-router-dom";
 import { API } from "aws-amplify";
 import { Elements, StripeProvider } from "react-stripe-elements";
-import { useAppContext } from "../libs/contextLib";
 
-import { useFormFields } from "../libs/hooksLib";
-import { onError } from "../libs/errorLib";
-import config from "../config";
-import BillingForm from "../components/BillingForm";
+import { useAppContext } from "../../libs/contextLib";
+import { useFormFields } from "../../libs/hooksLib";
+import { onError } from "../../libs/errorLib";
+import config from "../../config";
+import { BillingForm } from "../../components";
 import "./Settings.css";
 
 export default function Settings() {

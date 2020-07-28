@@ -2,8 +2,8 @@ import React from 'react';
 import { Card, Button } from 'react-bootstrap';
 import { Link } from "react-router-dom";
 
-import config from "../config";
-import { currencyFormatter } from '../libs/currencyLib';
+import config from "../../config";
+import { currencyFormatter } from '../../libs/currencyLib';
 import './Item.css';
 
 

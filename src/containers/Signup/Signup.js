@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import {
-  Form, Tooltip, OverlayTrigger, Image
+  Form, Tooltip, OverlayTrigger
 } from "react-bootstrap";
 import { Auth } from "aws-amplify";
 
-import LoaderButton from "../../components/LoaderButton";
+import { LoaderButton } from "../../components";
 import { useAppContext } from "../../libs/contextLib";
 import { useFormFields } from "../../libs/hooksLib";
 import { onError } from "../../libs/errorLib";

@@ -2,7 +2,7 @@ import React, { useRef, useState } from "react";
 import { Form } from "react-bootstrap";
 import { API } from "aws-amplify";
 
-import LoaderButton from "../components/LoaderButton";
+import { LoaderButton } from "../components";
 import { onError } from "../libs/errorLib";
 import { s3Upload } from "../libs/awsLib";
 import config from "../config";
