@@ -4,10 +4,11 @@ import { API, Storage } from "aws-amplify";
 import { Container, Row, Image, Button, Collapse, Form, Col } from "react-bootstrap";
 
 import config from "../config";
-import { LoaderComponent } from "../components";
+import { LoaderComponent, QuanitySelect } from "../components";
 import { onError } from "../libs/errorLib";
 import Settings from './Settings';
 import { currencyFormatter } from '../libs/currencyLib';
+import { AppContext } from "../libs/contextLib";
 import "./SingleItem.css";
 
 const SHOW_PURCHASE = 'SHOW_PURCHASE';
@@ -17,13 +18,15 @@ export default function SingleItem() {
   const { id } = useParams();
   const history = useHistory();
   const [item, setItem] = useState(null);
-  // const [content, setContent] = useState("");
   const [isPageLoading, setIsPageLoading] = useState(true);
   // const [isLoading, setIsLoading] = useState(false);
   const [open, setOpen] = useState(false);
   const [verify, setVerify] = useState(false);
   const [name, setName] = useState("");
+  const [quanity, setQuanity] = useState(0);
   let [showRender, setPurchase] = useState("false");
+
+  const toggleQuanity = (e) => setQuanity(e.target.value);
 
   useEffect(() => {
     function loadNote() {
@@ -39,8 +42,8 @@ export default function SingleItem() {
           item.attachmentURL = await Storage.vault.get(attachment);
         }
 
-        // setContent(content);
         setItem(item);
+        setQuanity(1)
         setIsPageLoading(false);
       } catch (e) {
         console.log(e);
@@ -102,10 +105,7 @@ export default function SingleItem() {
   function renderPurchase() {
     return (
       <div>
-        <Settings
-          price={Number(item.price)}
-          name={name}
-        />
+        <Settings />
       </div>
     );
   }
@@ -161,50 +161,59 @@ export default function SingleItem() {
     imageUrl = `https://${config.s3.BUCKET}.s3.amazonaws.com/public/${item.attachment}`;
   }
 
+  console.log(quanity)
+
   return (
     <div className="single-item-wrapper">
       {!isPageLoading ? item && (
-        <Container className="single-item">
-          <Row>
-            <h1 className="item-heading">{item.title}</h1>
-          </Row>
-          <Row>
-            <Col md={6} sm={12} className="mb-5">
-              <Image
-                src={imageUrl}
-                className="item-image"
-                fluid
-              />
-            </Col>
-            <Col className="item-details">
-              <span className="item-description">
-                <Button
-                  onClick={() => setOpen(!open)}
-                  variant="info"
-                  size="lg"
-                  aria-controls="example-collapse-text"
-                  aria-expanded={open}
-                >
-                  See Description
-                </Button>
-                <Collapse in={open}>
-                  <div id="example-collapse-text">
-                    {item.description}
-                  </div>
-                </Collapse>
-              </span>
-              <Row className="item-price">
-                <span>{currencyFormatter(Number(item.price))}</span>
-              </Row>
-              {renderPurchaseOrAlreadyPurchased()}
-            </Col>
-          </Row>
-          <Row>
-            <Col id="purchase">
-              {renderMarkerup}
-            </Col>
-          </Row>
-        </Container>
+        <AppContext.Provider value={{ item, quanity, toggleQuanity }}>
+          <Container className="single-item">
+            <Row>
+              <h1 className="item-heading">{item.title}</h1>
+            </Row>
+            <Row>
+              <Col md={6} sm={12} className="mb-5">
+                <Image
+                  src={imageUrl}
+                  className="item-image"
+                  fluid
+                />
+              </Col>
+              <Col className="item-details">
+                <span className="item-description">
+                  <Button
+                    onClick={() => setOpen(!open)}
+                    variant="info"
+                    size="lg"
+                    aria-controls="example-collapse-text"
+                    aria-expanded={open}
+                  >
+                    See Description
+                  </Button>
+                  <Collapse in={open}>
+                    <div id="example-collapse-text">
+                      {item.description}
+                    </div>
+                  </Collapse>
+                </span>
+                <Row className="item-price">
+                  <span>{currencyFormatter(Number(item.price))}</span>
+                </Row>
+                <Row>
+                  <QuanitySelect
+                    options={[1, 2, 3]}
+                  />
+                </Row>
+                {renderPurchaseOrAlreadyPurchased()}
+              </Col>
+            </Row>
+            <Row>
+              <Col id="purchase">
+                {renderMarkerup}
+              </Col>
+            </Row>
+          </Container>
+        </AppContext.Provider>
       ) : <LoaderComponent />}
     </div>
   );

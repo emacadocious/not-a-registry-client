@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useHistory, useParams} from "react-router-dom";
 import { API } from "aws-amplify";
 import { Elements, StripeProvider } from "react-stripe-elements";
+import { useAppContext } from "../libs/contextLib";
 
 import { useFormFields } from "../libs/hooksLib";
 import { onError } from "../libs/errorLib";
@@ -9,7 +10,7 @@ import config from "../config";
 import BillingForm from "../components/BillingForm";
 import "./Settings.css";
 
-export default function Settings({ price }) {
+export default function Settings() {
   const history = useHistory();
   const { id } = useParams();
   const [isLoading, setIsLoading] = useState(false);
@@ -17,6 +18,7 @@ export default function Settings({ price }) {
   const [fields, handleFieldChange] = useFormFields({
     name: ""
   });
+  const { item, quanity } = useAppContext();
 
   useEffect(() => {
     setStripe(window.Stripe(config.STRIPE_KEY));
@@ -45,7 +47,7 @@ export default function Settings({ price }) {
 
     try {
       await billUser({
-        price,
+        price: item.price,
         source: token.id
       });
 
@@ -63,6 +65,8 @@ export default function Settings({ price }) {
       setIsLoading(false);
     }
   }
+
+  console.log(quanity)
 
   return (
     <div className="Settings">
