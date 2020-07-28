@@ -11,7 +11,7 @@
   align-items: center;
   background-size: cover;
   background-position: center center;
-  background-image: url('./banner-2.png');
+  background-image: url('./banner.png');
 }
 
 .jss98 {
@@ -33,6 +33,9 @@
     margin-right: auto;
     padding-left: 15px;
     padding-right: 15px;
+    max-width: 75%;
+    font-family: sans;
+    font-weight: bolder;
 }
 
 .jss99 {
@@ -67,29 +70,4 @@
     font-size: 1.313rem;
     max-width: 500px;
     color: inherit;
-}
-
-@media (min-width: 1200px){
-  .jss1 {
-      max-width: 1140px;
-  }
-}
-
-
-@media (min-width: 992px) {
-  .jss1 {
-      max-width: 960px;
-  }
-}
-
-@media (min-width: 768px) {
-  .jss1 {
-      max-width: 720px;
-  }
-}
-
-@media (min-width: 576px) {
-  .jss1 {
-      max-width: 540px;
-  }
 }

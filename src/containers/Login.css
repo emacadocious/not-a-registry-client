@@ -1,16 +1,20 @@
 @media all and (min-width: 480px) {
-  .Login {
+  .login {
     padding: 60px 0;
-    height: 90vh;
   }
 
-  .Login form {
+  .login form {
     margin: 0 auto;
     max-width: 320px;
   }
 }
 
-.Login form a {
+.login {
+  min-height: 75vh;
+  margin-top: 50px;
+}
+
+.login form a {
   margin-bottom: 15px;
   display: block;
   font-size: 14px;

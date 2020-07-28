@@ -36,7 +36,7 @@ export default function Login() {
   }
 
   return (
-    <div className="Login">
+    <div className="login">
       <form onSubmit={handleSubmit}>
         <Form.Group controlId="email" size="large">
           <Form.Label>Email</Form.Label>

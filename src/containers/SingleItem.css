@@ -1,3 +1,7 @@
+html {
+  scroll-behavior: smooth;
+}
+
 .row {
   justify-content: center;
 }
@@ -12,6 +16,15 @@
   justify-content: center;
 }
 
+.item-heading {
+  margin-bottom: 25px;
+}
+
+#example-collapse-text {
+  margin: 10px;
+  font-style: italic;
+}
+
 .item-title {
   font-size: 2em;
   padding: 20px;
@@ -22,8 +35,13 @@
 }
 
 .item-price {
-  margin-top: 25px;
   width: 100%;
+}
+
+.item-price span {
+  margin: 25px 0;
+  font-size: 2.5em;
+  font-weight: bold;
 }
 
 .item-input {
@@ -32,8 +50,9 @@
   margin: 25px;
 }
 
-.item-is-purchased {
-  margin: 50px 0;
+.item-is-purchased .btn {
+  width: 100%;
+  margin-bottom: 25px;
 }
 
 .item-submit {
@@ -42,5 +61,4 @@
 
 .item-details button {
   width: 100%;
-  margin: 25px 0;
 }

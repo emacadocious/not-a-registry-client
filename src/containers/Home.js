@@ -5,7 +5,7 @@ import Fade from 'react-reveal/Fade';
 
 import { useAppContext } from "../libs/contextLib";
 import { onError } from "../libs/errorLib";
-import { Banner, Item } from '../components';
+import { Banner, Item, About } from '../components';
 import "./Home.css";
 
 export default function Home() {
@@ -56,6 +56,7 @@ export default function Home() {
   return (
     <div className="Home">
       <Banner />
+      <About />
       <div className="main-container">
         <Fade bottom>
           <Container>

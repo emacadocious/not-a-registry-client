@@ -1,0 +1,32 @@
+@media all and (min-width: 480px) {
+  .signup {
+    padding: 60px 0;
+  }
+
+  .signup form {
+    margin: 0 auto;
+    max-width: 320px;
+  }
+}
+
+.signup {
+  min-height: 75vh;
+  margin-top: 50px;
+
+}
+
+.signup form span.help-block {
+  font-size: 14px;
+  padding-bottom: 10px;
+  color: #999;
+}
+
+.information-why {
+  font-style: italic;
+  text-decoration: underline;
+  text-align: center;
+}
+
+.checkbox-label {
+  
+}

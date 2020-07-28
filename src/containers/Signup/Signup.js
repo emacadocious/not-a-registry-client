@@ -1,14 +1,14 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import {
-  Form,
+  Form, Tooltip, OverlayTrigger, Image
 } from "react-bootstrap";
 import { Auth } from "aws-amplify";
 
-import LoaderButton from "../components/LoaderButton";
-import { useAppContext } from "../libs/contextLib";
-import { useFormFields } from "../libs/hooksLib";
-import { onError } from "../libs/errorLib";
+import LoaderButton from "../../components/LoaderButton";
+import { useAppContext } from "../../libs/contextLib";
+import { useFormFields } from "../../libs/hooksLib";
+import { onError } from "../../libs/errorLib";
 import "./Signup.css";
 
 export default function Signup() {
@@ -30,6 +30,13 @@ export default function Signup() {
       fields.password === fields.confirmPassword
     );
   }
+
+
+  const renderTooltip = (props) => (
+    <Tooltip id="button-tooltip" {...props}>
+      We want you to create an account prior to being able to purchase items. That way we won't get hammered by bots.
+    </Tooltip>
+  );
 
   function validateConfirmationForm() {
     return fields.confirmationCode.length > 0;
@@ -73,7 +80,7 @@ export default function Signup() {
   function renderConfirmationForm() {
     return (
       <form onSubmit={handleConfirmationSubmit}>
-        <Form.Group controlId="confirmationCode" bsSize="large">
+        <Form.Group controlId="confirmationCode" size="lg">
           <Form.Label>Confirmation Code</Form.Label>
           <Form.Control
             autoFocus
@@ -89,7 +96,7 @@ export default function Signup() {
         <LoaderButton
           block
           type="submit"
-          bsSize="large"
+          size="lg"
           isLoading={isLoading}
           disabled={!validateConfirmationForm()}
         >
@@ -102,7 +109,7 @@ export default function Signup() {
   function renderForm() {
     return (
       <form onSubmit={handleSubmit}>
-        <Form.Group controlId="email" bsSize="large">
+        <Form.Group controlId="email" size="lg">
           <Form.Label>Email</Form.Label>
         <Form.Control
             autoFocus
@@ -110,27 +117,36 @@ export default function Signup() {
             value={fields.email}
             onChange={handleFieldChange}
           />
-      </Form.Group>
-        <Form.Group controlId="password" bsSize="large">
+        </Form.Group>
+        <Form.Group controlId="password" size="lg">
           <Form.Label>Password</Form.Label>
         <Form.Control
             type="password"
             value={fields.password}
             onChange={handleFieldChange}
           />
-      </Form.Group>
-        <Form.Group controlId="confirmPassword" bsSize="large">
+        </Form.Group>
+        <Form.Group controlId="confirmPassword" size="lg">
           <Form.Label>Confirm Password</Form.Label>
         <Form.Control
             type="password"
             onChange={handleFieldChange}
             value={fields.confirmPassword}
           />
-      </Form.Group>
+        </Form.Group>
+        <Form.Group className="information-why">
+          <OverlayTrigger
+            placement="top"
+            delay={{ show: 250, hide: 400 }}
+            overlay={renderTooltip}
+          >
+            <span>Why am I being asked to login?</span>
+          </OverlayTrigger>
+        </Form.Group>
         <LoaderButton
           block
           type="submit"
-          bsSize="large"
+          size="lg"
           isLoading={isLoading}
           disabled={!validateForm()}
         >
@@ -141,7 +157,7 @@ export default function Signup() {
   }
 
   return (
-    <div className="Signup">
+    <div className="signup">
       {newUser === null ? renderForm() : renderConfirmationForm()}
     </div>
   );

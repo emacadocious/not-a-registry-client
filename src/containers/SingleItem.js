@@ -3,6 +3,7 @@ import { useParams, useHistory } from "react-router-dom";
 import { API, Storage } from "aws-amplify";
 import { Container, Row, Image, Button, Collapse, Form, Col } from "react-bootstrap";
 
+import config from "../config";
 import { LoaderComponent } from "../components";
 import { onError } from "../libs/errorLib";
 import Settings from './Settings';
@@ -21,8 +22,7 @@ export default function SingleItem() {
   // const [isLoading, setIsLoading] = useState(false);
   const [open, setOpen] = useState(false);
   const [verify, setVerify] = useState(false);
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
+  const [name, setName] = useState("");
   let [showRender, setPurchase] = useState("false");
 
   useEffect(() => {
@@ -61,13 +61,12 @@ export default function SingleItem() {
     event.preventDefault();
 
     // setIsLoading(true);
-
     try {
       await saveNote({
-        firstName,
-        lastName,
+        purchasedBy: name,
         available: false,
-        purchased: true
+        purchased: true,
+        purchaseDate: new Date()
       });
       history.push("/");
     } catch (e) {
@@ -84,6 +83,7 @@ export default function SingleItem() {
           variant="success"
           size="lg"
           onClick={() => setPurchase(showRender = SHOW_PURCHASE)}
+          href="#purchase"
         >
           I want to purchase this item
         </Button>
@@ -91,6 +91,7 @@ export default function SingleItem() {
           variant="success"
           size="lg"
           onClick={() => setPurchase(showRender = SHOW_ALREADY_PURCHASED)}
+          href="#purchase"
         >
           I have already purchased this item.
         </Button>
@@ -101,7 +102,10 @@ export default function SingleItem() {
   function renderPurchase() {
     return (
       <div>
-        <Settings />
+        <Settings
+          price={Number(item.price)}
+          name={name}
+        />
       </div>
     );
   }
@@ -113,27 +117,19 @@ export default function SingleItem() {
           <Form.Group>
             <Row>
               <Form.Control
-                placeholder="First name"
+                placeholder="Your Name"
                 className="item-input"
-                onChange={e => setFirstName(e.target.value)}
-                size="lg"
-              />
-            </Row>
-            <Row>
-              <Form.Control
-                placeholder="Last name"
-                className="item-input"
-                onChange={e => setLastName(e.target.value)}
+                onChange={e => setName(e.target.value)}
                 size="lg"
               />
             </Row>
             <Row>
               <Form.Check
-                label="I have already purchased this item."
                 type="checkbox"
                 id="checkbox-1"
                 onClick={() => setVerify(!verify)}
               />
+              <Form.Label className="checkbox-label">I promise that I have already purchased this item.</Form.Label>
             </Row>
             <Row>
               <Button
@@ -160,19 +156,22 @@ export default function SingleItem() {
     renderMarkerup = renderAlreadyPurchased();
   }
 
-  console.log(item)
+  let imageUrl = '';
+  if (item) {
+    imageUrl = `https://${config.s3.BUCKET}.s3.amazonaws.com/public/${item.attachment}`;
+  }
 
   return (
     <div className="single-item-wrapper">
       {!isPageLoading ? item && (
         <Container className="single-item">
           <Row>
-            <h1>{item.title}</h1>
+            <h1 className="item-heading">{item.title}</h1>
           </Row>
           <Row>
             <Col md={6} sm={12} className="mb-5">
               <Image
-                src={item.attachmentURL}
+                src={imageUrl}
                 className="item-image"
                 fluid
               />
@@ -195,13 +194,13 @@ export default function SingleItem() {
                 </Collapse>
               </span>
               <Row className="item-price">
-                <h2>{currencyFormatter(item.price)}</h2>
+                <span>{currencyFormatter(Number(item.price))}</span>
               </Row>
               {renderPurchaseOrAlreadyPurchased()}
             </Col>
           </Row>
           <Row>
-            <Col>
+            <Col id="purchase">
               {renderMarkerup}
             </Col>
           </Row>

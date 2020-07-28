@@ -1,0 +1,24 @@
+.about {
+  min-height: 90vh;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  padding: 50px;
+  background-color: #9eb48e26;
+}
+
+.about-us, .about-us-why {
+  font-size: 3.5em;
+  min-height: 10vh;
+  font-family: 'Dancing Script', cursive;
+}
+
+.about-us-imgs {
+  min-height: 50vh;
+  flex-direction: space-between;
+  align-items: center;
+}
+
+.about-us-imgs img {
+  max-height: 250px;
+}

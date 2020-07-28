@@ -2,14 +2,9 @@ import React, { useState } from "react";
 import { Form } from "react-bootstrap";
 import { CardElement, injectStripe } from "react-stripe-elements";
 import LoaderButton from "./LoaderButton";
-import { useFormFields } from "../libs/hooksLib";
 import "./BillingForm.css";
 
-function BillingForm({ isLoading, onSubmit, ...props }) {
-  const [fields, handleFieldChange] = useFormFields({
-    name: "",
-    storage: ""
-  });
+function BillingForm({ isLoading, onSubmit, handleFieldChange, name, ...props }) {
   const [isProcessing, setIsProcessing] = useState(false);
   const [isCardComplete, setIsCardComplete] = useState(false);
 
@@ -17,8 +12,7 @@ function BillingForm({ isLoading, onSubmit, ...props }) {
 
   function validateForm() {
     return (
-      fields.name !== "" &&
-      fields.storage !== "" &&
+      name !== "" &&
       isCardComplete
     );
   }
@@ -28,42 +22,30 @@ function BillingForm({ isLoading, onSubmit, ...props }) {
 
     setIsProcessing(true);
 
-    const { token, error } = await props.stripe.createToken({ name: fields.name });
+    const { token, error } = await props.stripe.createToken({ name: name });
 
     setIsProcessing(false);
 
-    onSubmit(fields.storage, { token, error });
+    onSubmit({ token, error });
   }
 
   return (
     <form className="BillingForm" onSubmit={handleSubmitClick}>
-      <Form.Group controlId="storage">
-        <Form.Label>Storage</Form.Label>
-        <Form.Control
-          min="0"
-          type="number"
-          value={fields.storage}
-          onChange={handleFieldChange}
-          placeholder="Number of items to store"
-        />
-    </Form.Group>
-      <hr />
     <Form.Group controlId="name">
         <Form.Label>Cardholder&apos;s name</Form.Label>
         <Form.Control
           type="text"
-          value={fields.name}
+          value={name}
           onChange={handleFieldChange}
           placeholder="Name on the card"
+          size="lg"
         />
     </Form.Group>
       <Form.Label>Credit Card Info</Form.Label>
       <CardElement
         className="card-field"
         onChange={e => setIsCardComplete(e.complete)}
-        style={{
-          base: { fontSize: "18px", fontFamily: '"Open Sans", sans-serif' }
-        }}
+        size="lg"
       />
       <LoaderButton
         block

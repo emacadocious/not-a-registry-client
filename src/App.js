@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Auth } from "aws-amplify";
 import { Navbar, Nav } from "react-bootstrap";
-import { useHistory } from "react-router-dom";
+import { useHistory, NavLink } from "react-router-dom";
 
 import { AppContext } from "./libs/contextLib";
 import { onError } from "./libs/errorLib";
@@ -44,7 +44,7 @@ function App() {
   function renderNav() {
     return (
       <Navbar className="app-navigation">
-        <Navbar.Brand href="/">Navbar with text</Navbar.Brand>
+        <Navbar.Brand href="/">Not A Registry</Navbar.Brand>
         <Navbar.Toggle />
         <Navbar.Collapse className="justify-content-end">
         {
@@ -53,8 +53,8 @@ function App() {
           ) :
             (
               <React.Fragment>
-                <Nav.Link href="/login">Login</Nav.Link>
-                <Nav.Link href="/signup">Signup</Nav.Link>
+                <NavLink to="/login">Login</NavLink>
+                <NavLink to="/signup">Signup</NavLink>
               </React.Fragment>
             )
           }
