@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { CardDeck, CardColumns, Container, Row } from "react-bootstrap";
 import { API } from "aws-amplify";
-import Fade from 'react-reveal/Fade';
 
 import { useAppContext } from "../../libs/contextLib";
 import { onError } from "../../libs/errorLib";
