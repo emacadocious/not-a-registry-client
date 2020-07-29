@@ -8,4 +8,5 @@ export { default as ErrorBoundary } from './ErrorBoundary';
 export { default as LoaderButton } from './Loader/LoaderButton';
 export { default as LoaderComponent } from './Loader/LoaderComponent';
 export { default as QuanitySelect } from './QuanitySelect';
+export { default as RenderTooltip } from './Tooltip/RenderTooltip';
 export { default as BillingForm } from './BillingForm/BillingForm';

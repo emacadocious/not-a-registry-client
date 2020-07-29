@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import {
-  Form, Tooltip, OverlayTrigger
+  Form, OverlayTrigger
 } from "react-bootstrap";
 import { Auth } from "aws-amplify";
 
-import { LoaderButton } from "../../components";
+import { LoaderButton, RenderTooltip } from "../../components";
 import { useAppContext } from "../../libs/contextLib";
 import { useFormFields } from "../../libs/hooksLib";
 import { onError } from "../../libs/errorLib";
@@ -30,13 +30,6 @@ export default function Signup() {
       fields.password === fields.confirmPassword
     );
   }
-
-
-  const renderTooltip = (props) => (
-    <Tooltip id="button-tooltip" {...props}>
-      We want you to create an account prior to being able to purchase items. That way we won't get hammered by bots.
-    </Tooltip>
-  );
 
   function validateConfirmationForm() {
     return fields.confirmationCode.length > 0;
@@ -135,13 +128,9 @@ export default function Signup() {
           />
         </Form.Group>
         <Form.Group className="information-why">
-          <OverlayTrigger
-            placement="top"
-            delay={{ show: 250, hide: 400 }}
-            overlay={renderTooltip}
-          >
-            <span>Why am I being asked to login?</span>
-          </OverlayTrigger>
+          <RenderTooltip
+            title="Why do I need to create an account?"
+          />
         </Form.Group>
         <LoaderButton
           block

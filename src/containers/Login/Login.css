@@ -14,8 +14,18 @@
   margin-top: 50px;
 }
 
-.login form a {
+.password-reset {
   margin-bottom: 15px;
   display: block;
-  font-size: 14px;
+  font-size: 1em;
+}
+
+.login-btn {
+  padding: 10px;
+  font-size: 1.5em;
+  margin-bottom: 25px;
+}
+
+.login-btn a {
+  color: white;
 }

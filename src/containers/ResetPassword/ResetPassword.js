@@ -67,7 +67,10 @@ export default function ResetPassword() {
   function renderRequestCodeForm() {
     return (
       <Form onSubmit={handleSendCodeClick}>
-        <Form.Group bsSize="large" controlId="email">
+        <Form.Group
+          size="large"
+          controlId="email"
+        >
           <Form.Label>Email</Form.Label>
           <Form.Control
             autoFocus
@@ -79,7 +82,7 @@ export default function ResetPassword() {
         <LoaderButton
           block
           type="submit"
-          bsSize="large"
+          size="large"
           isLoading={isSendingCode}
           disabled={!validateCodeForm()}
         >
@@ -92,7 +95,7 @@ export default function ResetPassword() {
   function renderConfirmationForm() {
     return (
       <Form onSubmit={handleConfirmClick}>
-        <Form.Group bsSize="large" controlId="code">
+        <Form.Group size="large" controlId="code">
           <Form.Label>Confirmation Code</Form.Label>
           <Form.Control
             autoFocus
@@ -106,7 +109,7 @@ export default function ResetPassword() {
           </Form.Text>
         </Form.Group>
         <hr />
-        <Form.Group bsSize="large" controlId="password">
+      <Form.Group size="large" controlId="password">
           <Form.Label>New Password</Form.Label>
           <Form.Control
             type="password"
@@ -114,7 +117,7 @@ export default function ResetPassword() {
             onChange={handleFieldChange}
           />
         </Form.Group>
-        <Form.Group bsSize="large" controlId="confirmPassword">
+        <Form.Group size="large" controlId="confirmPassword">
           <Form.Label>Confirm Password</Form.Label>
           <Form.Control
             type="password"
@@ -125,7 +128,7 @@ export default function ResetPassword() {
         <LoaderButton
           block
           type="submit"
-          bsSize="large"
+          size="large"
           isLoading={isConfirming}
           disabled={!validateResetForm()}
         >
@@ -149,7 +152,7 @@ export default function ResetPassword() {
   }
 
   return (
-    <div className="ResetPassword">
+    <div className="resetPassword">
       {!codeSent
         ? renderRequestCodeForm()
         : !confirmed

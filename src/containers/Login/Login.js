@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { Auth } from "aws-amplify";
-import { Form } from "react-bootstrap";
+import { Form, Button, OverlayTrigger } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
-import { LoaderButton } from "../../components";
+import { LoaderButton, RenderTooltip } from "../../components";
 import { useAppContext } from "../../libs/contextLib";
 import { useFormFields } from "../../libs/hooksLib";
 import { onError } from "../../libs/errorLib";
@@ -40,31 +40,46 @@ export default function Login() {
       <form onSubmit={handleSubmit}>
         <Form.Group controlId="email" size="large">
           <Form.Label>Email</Form.Label>
-        <Form.Control
+          <Form.Control
             autoFocus
             type="email"
             value={fields.email}
             onChange={handleFieldChange}
           />
-      </Form.Group>
+        </Form.Group>
         <Form.Group controlId="password" size="large">
           <Form.Label>Password</Form.Label>
-        <Form.Control
+          <Form.Control
             type="password"
             value={fields.password}
             onChange={handleFieldChange}
           />
-      </Form.Group>
-      <Link to="/login/reset">Forgot password?</Link>
+        </Form.Group>
+        <Form.Group>
+          <RenderTooltip />
+        </Form.Group>
+        <Link
+          to="/login/reset"
+          className="password-reset"
+        >Forgot password?</Link>
         <LoaderButton
           block
           type="submit"
           size="large"
+          className="login-btn"
           isLoading={isLoading}
           disabled={!validateForm()}
         >
           Login
         </LoaderButton>
+        <Button
+          block
+          variant="info"
+          size="large"
+          className="login-btn"
+        >
+          <Link to="/signup">Create Account</Link>
+        </Button>
       </form>
     </div>
   );
