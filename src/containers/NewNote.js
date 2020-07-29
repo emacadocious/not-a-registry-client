@@ -18,6 +18,7 @@ export default function NewNote() {
   const { value:purchaseDate, bind:bindPurchaseDate, reset:resetPurchaseDate} = useInput('');
   const { value:isAvailable, bind:bindIsAvailable, reset:resetBindIsAvailable } = useInput(true);
   const { value:purchasedBy, bind:bindPurchasedBy, reset:resetBindPurchasedBy } = useInput('');
+  const { value:quanityNeeded, bind:bindQuanityNeeded, reset:resetBindQuanityNeeded } = useInput('');
 
   function validateForm() {
     return itemTitle.length > 0 && itemDescription.length > 0;
@@ -50,16 +51,26 @@ export default function NewNote() {
         itemPrice,
         purchaseDate,
         isAvailable: isAvailable === true,
-        purchasedBy,
+        purchaseHistory: isAvailable === true ? [] :
+          {
+            purchasedBy,
+            purchaseDate,
+            quanityNeeded
+          },
+        quanityNeeded,
+        quanityAvailable: isAvailable === true ? quanityNeeded : 0,
         attachment
       });
       alert('Item successfully created.');
       resetItemTitle();
-      resetItemDescription()
-      resetItemPrice()
-      resetPurchaseDate()
-      resetBindIsAvailable()
-      resetBindPurchasedBy()
+      resetItemDescription();
+      resetItemPrice();
+      resetPurchaseDate();
+      resetBindIsAvailable();
+      resetBindPurchasedBy();
+      resetBindQuanityNeeded();
+
+      setIsLoading(false);
     } catch (e) {
       console.log(e)
       onError(e);
@@ -94,6 +105,11 @@ export default function NewNote() {
           <Form.Control
             type="number"
             {...bindItemPrice}
+          />
+        <Form.Label>Quanity Desired</Form.Label>
+          <Form.Control
+            type="number"
+            {...bindQuanityNeeded}
           />
           <Form.Label>Purchase Date</Form.Label>
           <Form.Control

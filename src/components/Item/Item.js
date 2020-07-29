@@ -20,7 +20,7 @@ export default function Item({ item }) {
       </Card.Body>
       <Card.Footer>
       {
-        item.available ?
+        (item.quanityAvailable > 0 || item.available) ?
           <Link to={`/items/${item.itemId}`}>
             <Button variant="success">
               Purchase

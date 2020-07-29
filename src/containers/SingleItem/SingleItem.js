@@ -9,6 +9,7 @@ import { onError } from "../../libs/errorLib";
 import { Settings } from '../';
 import { currencyFormatter } from '../../libs/currencyLib';
 import { AppContext } from "../../libs/contextLib";
+import { range } from "../../libs/rangeLib";
 import "./SingleItem.css";
 
 const SHOW_PURCHASE = 'SHOW_PURCHASE';
@@ -26,7 +27,7 @@ export default function SingleItem() {
   const [quanity, setQuanity] = useState(0);
   let [showRender, setPurchase] = useState("false");
 
-  const toggleQuanity = (e) => setQuanity(e.target.value);
+  const toggleQuanity = (e) => setQuanity(Number(e.target.value));
 
   useEffect(() => {
     function loadNote() {
@@ -65,11 +66,25 @@ export default function SingleItem() {
 
     // setIsLoading(true);
     try {
+      console.log({
+        available: item.quanityAvailable - quanity > 0,
+        purchased: item.quanityAvailable - quanity === 0,
+        quanityAvailable: item.quanityAvailable,
+        purchaseHistory: {
+          purchasedBy: name,
+          purchaseDate: new Date(),
+          quanity
+        }
+      })
       await saveNote({
-        purchasedBy: name,
-        available: false,
-        purchased: true,
-        purchaseDate: new Date()
+        available: item.quanityAvailable - quanity > 0,
+        purchased: item.quanityAvailable - quanity === 0,
+        quanityAvailable: item.quanityAvailable,
+        purchaseHistory: {
+          purchasedBy: name,
+          purchaseDate: new Date(),
+          quanity
+        }
       });
       history.push("/");
     } catch (e) {
@@ -113,7 +128,7 @@ export default function SingleItem() {
   function renderAlreadyPurchased() {
     return (
       <div>
-        <Form onSubmit={handleSubmit}>
+        <Form onSubmit={handleSubmit} className="item-input-form">
           <Form.Group>
             <Row>
               <Form.Control
@@ -161,8 +176,6 @@ export default function SingleItem() {
     imageUrl = `https://${config.s3.BUCKET}.s3.amazonaws.com/public/${item.attachment}`;
   }
 
-  console.log(quanity)
-
   return (
     <div className="single-item-wrapper">
       {!isPageLoading ? item && (
@@ -199,11 +212,14 @@ export default function SingleItem() {
                 <Row className="item-price">
                   <span>{currencyFormatter(Number(item.price))}</span>
                 </Row>
-                <Row>
-                  <QuanitySelect
-                    options={[1, 2, 3]}
-                  />
-                </Row>
+                {
+                  item.quanityAvailable > 1 &&
+                    <Row>
+                      <QuanitySelect
+                        options={range(1 ,item.quanityAvailable)}
+                      />
+                    </Row>
+                }
                 {renderPurchaseOrAlreadyPurchased()}
               </Col>
             </Row>

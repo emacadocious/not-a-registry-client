@@ -5,6 +5,7 @@ import { useAppContext } from "../libs/contextLib";
 export default function LoaderButton({
   isLoading,
   className = "",
+  title = "Please Select Amount to Purchase",
   options,
   handleSelect,
   ...props
@@ -13,16 +14,14 @@ export default function LoaderButton({
 
   return (
     <Form.Group controlId="exampleForm.SelectCustomSizeLg">
-      <Form.Label>Custom select Large</Form.Label>
+      <Form.Label>{title}</Form.Label>
       <Form.Control
         as="select"
-        size="lg"
-        custom
         onChange={toggleQuanity}
       >
         {
           options.map((value, index) =>
-            <option key={index} value={value}>{value}</option>
+            <option key={index} value={Number(value)}>{value}</option>
           )
         }
       </Form.Control>

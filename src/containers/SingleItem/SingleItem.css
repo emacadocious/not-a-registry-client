@@ -45,7 +45,6 @@ html {
 }
 
 .item-input {
-  width: 50%;
   display: block;
   margin: 25px;
 }
@@ -61,4 +60,9 @@ html {
 
 .item-details button {
   width: 100%;
+}
+
+.item-input-form {
+  max-width: 480px;
+  align-items: center;
 }

@@ -48,14 +48,19 @@ export default function Settings() {
     try {
       await billUser({
         price: item.price,
-        source: token.id
+        source: token.id,
+        quanity
       });
 
       await saveNote({
-        purchasedBy: fields.name,
-        available: false,
-        purchased: true,
-        purchaseDate: new Date()
+        available: item.quanityAvailable - quanity > 0,
+        purchased: item.quanityAvailable - quanity === 0,
+        purchaseHistory: {
+          purchasedBy: fields.name,
+          purchaseDate: new Date(),
+          quanity
+        },
+        quanityAvailable: item.quanityAvailable
       });
 
       alert("Your card has been charged successfully!");
@@ -65,8 +70,6 @@ export default function Settings() {
       setIsLoading(false);
     }
   }
-
-  console.log(quanity)
 
   return (
     <div className="Settings">
