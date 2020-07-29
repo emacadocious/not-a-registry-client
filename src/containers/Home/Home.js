@@ -5,7 +5,7 @@ import Fade from 'react-reveal/Fade';
 
 import { useAppContext } from "../../libs/contextLib";
 import { onError } from "../../libs/errorLib";
-import { Banner, Item, About } from '../../components';
+import { Banner, Item, About, LoaderComponent } from '../../components';
 import "./Home.css";
 
 export default function Home() {
@@ -39,32 +39,32 @@ export default function Home() {
   }
 
   function renderItems() {
-    return (
-      <div className="items">
-        <h1>Items</h1>
-        <CardDeck>
-          <CardColumns>
-            {!isLoading && renderItemsList(items)}
-          </CardColumns>
-        </CardDeck>
-      </div>
-    );
+    let markup = <LoaderComponent />
+    if (items) {
+      markup = (
+        <div className="items">
+          <h1>Items</h1>
+          <CardDeck>
+            <CardColumns data-aos="fade-up">
+              {!isLoading && renderItemsList(items)}
+            </CardColumns>
+          </CardDeck>
+        </div>
+      );
+    }
+    return markup;
   }
-
-  console.log(items);
 
   return (
     <div className="Home">
       <Banner />
       <About />
       <div className="main-container">
-        <Fade bottom>
-          <Container>
-            <Row>
-              {renderItems()}
-            </Row>
-          </Container>
-          </Fade>
+        <Container>
+          <Row>
+            {renderItems()}
+          </Row>
+        </Container>
       </div>
     </div>
   );
