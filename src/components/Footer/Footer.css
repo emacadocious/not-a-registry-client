@@ -1,7 +1,6 @@
 .blog-footer {
   padding: 2.5rem 0;
   color: white;
-  font-weight: bolder;
   text-align: center;
   background-color: #B7A075;
   border-top: .05rem solid #e5e5e5;
@@ -9,4 +8,9 @@
 }
 .blog-footer p:last-child {
   margin-bottom: 0;
+}
+
+h5 {
+  margin-bottom: 15px;
+  font-weight: bolder;
 }

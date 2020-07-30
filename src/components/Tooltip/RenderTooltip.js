@@ -1,7 +1,8 @@
 import React from 'react';
-import { OverlayTrigger, Tooltip } from "react-bootstrap";
+import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 
 import { WHY_LOGIN } from './constants';
+import './RenderTooltip.css';
 
 const showTooltip = (props) => (
   <Tooltip id="button-tooltip" {...props}>
@@ -19,7 +20,7 @@ function RenderTooltip({
       delay={{ show: 250, hide: 400 }}
       overlay={showTooltip}
     >
-      <span>Why do I need to login?</span>
+      <span className="information-why">{title}</span>
     </OverlayTrigger>
   )
 }

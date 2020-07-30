@@ -12,7 +12,7 @@
 .signup {
   min-height: 75vh;
   margin-top: 50px;
-
+  text-align: center;
 }
 
 .signup form span.help-block {
@@ -22,11 +22,8 @@
 }
 
 .information-why {
-  font-style: italic;
-  text-decoration: underline;
-  text-align: center;
 }
 
 .checkbox-label {
-  
+
 }

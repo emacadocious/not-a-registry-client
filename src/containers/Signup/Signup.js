@@ -127,7 +127,7 @@ export default function Signup() {
             value={fields.confirmPassword}
           />
         </Form.Group>
-        <Form.Group className="information-why">
+        <Form.Group>
           <RenderTooltip
             title="Why do I need to create an account?"
           />
