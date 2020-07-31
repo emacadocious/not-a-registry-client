@@ -133,7 +133,7 @@ export default function SingleItem() {
             <Row>
               <Form.Control
                 placeholder="Your Name"
-                className="item-input"
+                className="item-input field"
                 onChange={e => setName(e.target.value)}
                 size="lg"
               />

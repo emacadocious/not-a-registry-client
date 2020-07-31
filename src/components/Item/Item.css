@@ -6,3 +6,9 @@
 .item-price {
   font-size: 2em;
 }
+
+.item-availability {
+  display: block;
+  padding: 10px;
+  font-style: italic;
+}

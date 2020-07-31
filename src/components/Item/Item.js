@@ -9,6 +9,7 @@ import './Item.css';
 
 export default function Item({ item }) {
   const baseUrl = `https://${config.s3.BUCKET}.s3.amazonaws.com/public/${item.attachment}`;
+  console.log(item)
   return (
     <Card className="item">
       <Card.Img src={baseUrl} />
@@ -19,19 +20,19 @@ export default function Item({ item }) {
         </div>
       </Card.Body>
       <Card.Footer>
-      {
-        (item.quanityAvailable > 0 || item.available) ?
-          <Link to={`/items/${item.itemId}`}>
-            <Button variant="success">
-              Purchase
+        <span className="item-availability">{item.quanityAvailable} of {item.quanityNeeded} Available</span>
+        {
+          (item.quanityAvailable > 0) ?
+            <Link to={`/items/${item.itemId}`}>
+              <Button variant="success">
+                Purchase
+              </Button>
+            </Link>
+            :
+            <Button variant="danger">
+              Already Purchased
             </Button>
-          </Link>
-          :
-          <Button variant="danger">
-            Already Purchased
-          </Button>
-      }
-
+        }
       </Card.Footer>
     </Card>
   );
