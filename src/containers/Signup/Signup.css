@@ -2,11 +2,12 @@
   .signup {
     padding: 60px 0;
   }
+}
 
-  .signup form {
-    margin: 0 auto;
-    max-width: 320px;
-  }
+.signup form {
+  margin: 0 auto;
+  max-width: 320px;
+  width: 85%;
 }
 
 .signup {

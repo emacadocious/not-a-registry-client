@@ -1,5 +1,6 @@
 .item img {
   width: 200px;
+  margin: 0 auto;
 }
 
 .item-price {

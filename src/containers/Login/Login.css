@@ -2,11 +2,12 @@
   .login {
     padding: 60px 0;
   }
+}
 
-  .login form {
-    margin: 0 auto;
-    max-width: 320px;
-  }
+.login form {
+  margin: 0 auto;
+  max-width: 320px;
+  width: 85%;
 }
 
 .login {

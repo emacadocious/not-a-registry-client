@@ -14,7 +14,7 @@
 }
 
 .about-us-imgs {
-  min-height: 50vh;
+  min-height: 30vh;
   flex-direction: space-between;
   align-items: center;
 }
