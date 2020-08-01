@@ -3,6 +3,7 @@ import * as Sentry from "@sentry/browser";
 const isLocal = process.env.NODE_ENV === "development";
 
 export function onError(error) {
+  console.log(process.env)
   let errorInfo = {};
   let message = error.toString();
 
