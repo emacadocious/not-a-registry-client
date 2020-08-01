@@ -29,7 +29,7 @@ const dev = {
 };
 
 const prod = {
-  STRIPE_KEY: "pk_test_51GwW4oBe5ZMf8HfoqsQVfm3xnjmnCJqON6rGblG28uRdTXUapmWav5u1nW0YkKacdzAcr2uORetCQlRuOxhpPfMO00OL21BdiB",
+  STRIPE_KEY: "pk_live_51GwW4oBe5ZMf8HfoxoAweSzUCy5QFfgz78ZNhhyQbUy4JleSifzZIctHRMLdqRch4GoLskPmloFBeaJSyTiJnNm500ejEO3rcx",
   s3: {
     REGION: "us-east-1",
     BUCKET: "not-a-registry-api-prod-attachmentsbucket-u5t6jce8fird"
