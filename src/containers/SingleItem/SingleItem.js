@@ -9,7 +9,7 @@ import { LoaderComponent, QuanitySelect, LoaderButton } from "../../components";
 import { onError } from "../../libs/errorLib";
 import { Settings } from '../';
 import { currencyFormatter } from '../../libs/currencyLib';
-import { AppContext, useAppContext } from "../../libs/contextLib";
+import { AppContext } from "../../libs/contextLib";
 import { range } from "../../libs/rangeLib";
 import "./SingleItem.css";
 
