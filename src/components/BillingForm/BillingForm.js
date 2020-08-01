@@ -1,12 +1,15 @@
 import React, { useState } from "react";
 import { Form } from "react-bootstrap";
-import { CardElement, injectStripe } from "react-stripe-elements";
+import { CardElement, useStripe, useElements } from '@stripe/react-stripe-js';
 import { LoaderButton } from "../";
 import "./BillingForm.css";
 
 function BillingForm({ isLoading, onSubmit, handleFieldChange, name, ...props }) {
   const [isProcessing, setIsProcessing] = useState(false);
   const [isCardComplete, setIsCardComplete] = useState(false);
+
+  const stripe = useStripe();
+  const elements = useElements();
 
   isLoading = isProcessing || isLoading;
 
@@ -20,14 +23,19 @@ function BillingForm({ isLoading, onSubmit, handleFieldChange, name, ...props })
   async function handleSubmitClick(event) {
     event.preventDefault();
 
+    // Use elements.getElement to get a reference to the mounted Element.
+    const cardElement = elements.getElement(CardElement);
+
     setIsProcessing(true);
 
-    const { token, error } = await props.stripe.createToken({ name: name });
+    // Pass the Element directly to other Stripe.js methods:
+    // e.g. createToken - https://stripe.com/docs/js/tokens_sources/create_token?type=cardElement
+    const { token, error } = await stripe.createToken(cardElement);
 
     setIsProcessing(false);
 
     onSubmit({ token, error });
-  }
+  };
 
   return (
     <form className="BillingForm" onSubmit={handleSubmitClick}>
@@ -59,4 +67,4 @@ function BillingForm({ isLoading, onSubmit, handleFieldChange, name, ...props })
   );
 }
 
-export default injectStripe(BillingForm);
+export default BillingForm;

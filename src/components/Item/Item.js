@@ -9,7 +9,6 @@ import './Item.css';
 
 export default function Item({ item }) {
   const baseUrl = `https://${config.s3.BUCKET}.s3.amazonaws.com/public/${item.attachment}`;
-  console.log(item)
   return (
     <Card className="item">
       <Card.Img src={baseUrl} />

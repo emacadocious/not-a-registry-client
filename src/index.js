@@ -10,7 +10,7 @@ import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 import { initSentry } from './libs/errorLib';
-import 'aos/dist/aos.css'; // You can also use <link> for styles
+import 'aos/dist/aos.css';
 
 AOS.init();
 

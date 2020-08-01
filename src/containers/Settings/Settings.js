@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useHistory, useParams} from "react-router-dom";
 import { API } from "aws-amplify";
-import { Elements, StripeProvider } from "react-stripe-elements";
+import { loadStripe } from '@stripe/stripe-js';
+import { Elements } from '@stripe/react-stripe-js';
 
 import { useAppContext } from "../../libs/contextLib";
 import { useFormFields } from "../../libs/hooksLib";
@@ -10,22 +11,18 @@ import config from "../../config";
 import { BillingForm } from "../../components";
 import "./Settings.css";
 
+const stripePromise = loadStripe(config.STRIPE_KEY);
+
 export default function Settings() {
   const history = useHistory();
   const { id } = useParams();
   const [isLoading, setIsLoading] = useState(false);
-  const [stripe, setStripe] = useState(null);
   const [fields, handleFieldChange] = useFormFields({
     name: ""
   });
   const { item, quanity } = useAppContext();
 
-  useEffect(() => {
-    setStripe(window.Stripe(config.STRIPE_KEY));
-  }, []);
-
   function billUser(details) {
-    console.log(details)
     return API.post("items", "/billing", {
       body: details
     });
@@ -73,16 +70,14 @@ export default function Settings() {
 
   return (
     <div className="Settings">
-      <StripeProvider stripe={stripe}>
-        <Elements>
-          <BillingForm
-            isLoading={isLoading}
-            onSubmit={handleFormSubmit}
-            handleFieldChange={handleFieldChange}
-            name={fields.name}
-          />
-        </Elements>
-      </StripeProvider>
+      <Elements stripe={stripePromise}>
+        <BillingForm
+          isLoading={isLoading}
+          onSubmit={handleFormSubmit}
+          handleFieldChange={handleFieldChange}
+          name={fields.name}
+        />
+      </Elements>
     </div>
   );
 }

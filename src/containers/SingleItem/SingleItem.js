@@ -64,18 +64,7 @@ export default function SingleItem() {
   async function handleSubmit(event) {
     event.preventDefault();
 
-    // setIsLoading(true);
     try {
-      console.log({
-        available: item.quanityAvailable - quanity > 0,
-        purchased: item.quanityAvailable - quanity === 0,
-        quanityAvailable: item.quanityAvailable,
-        purchaseHistory: {
-          purchasedBy: name,
-          purchaseDate: new Date(),
-          quanity
-        }
-      })
       await saveNote({
         available: item.quanityAvailable - quanity > 0,
         purchased: item.quanityAvailable - quanity === 0,
@@ -90,8 +79,11 @@ export default function SingleItem() {
     } catch (e) {
       console.log(e)
       onError(e);
-      // setIsLoading(false);
     }
+  }
+
+  function validateSubmit() {
+    return name.length > 0 && verify === true
   }
 
   function renderPurchaseOrAlreadyPurchased() {
@@ -133,7 +125,7 @@ export default function SingleItem() {
             <Row>
               <Form.Control
                 placeholder="Your Name"
-                className="item-input field"
+                className="item-input"
                 onChange={e => setName(e.target.value)}
                 size="lg"
               />
@@ -152,7 +144,7 @@ export default function SingleItem() {
                 size="lg"
                 className="item-submit"
                 type="submit"
-                disabled={(!verify)}
+                disabled={!validateSubmit()}
               >
                 Submit
               </Button>
