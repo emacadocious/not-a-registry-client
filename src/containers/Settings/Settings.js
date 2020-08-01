@@ -3,6 +3,7 @@ import { useHistory, useParams} from "react-router-dom";
 import { API } from "aws-amplify";
 import { loadStripe } from '@stripe/stripe-js';
 import { Elements } from '@stripe/react-stripe-js';
+import { toast } from 'react-toastify';
 
 import { useAppContext } from "../../libs/contextLib";
 import { useFormFields } from "../../libs/hooksLib";
@@ -60,7 +61,8 @@ export default function Settings() {
         quanityAvailable: item.quanityAvailable
       });
 
-      alert("Your card has been charged successfully!");
+
+      toast.success(`Thank you for your purchase of ${item.title}!`);
       history.push("/");
     } catch (e) {
       onError(e);

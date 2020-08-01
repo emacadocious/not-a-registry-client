@@ -2,13 +2,14 @@ import React, { useState, useEffect } from "react";
 import { useParams, useHistory } from "react-router-dom";
 import { API, Storage } from "aws-amplify";
 import { Container, Row, Image, Button, Collapse, Form, Col } from "react-bootstrap";
+import { toast } from 'react-toastify';
 
 import config from "../../config";
-import { LoaderComponent, QuanitySelect } from "../../components";
+import { LoaderComponent, QuanitySelect, LoaderButton } from "../../components";
 import { onError } from "../../libs/errorLib";
 import { Settings } from '../';
 import { currencyFormatter } from '../../libs/currencyLib';
-import { AppContext } from "../../libs/contextLib";
+import { AppContext, useAppContext } from "../../libs/contextLib";
 import { range } from "../../libs/rangeLib";
 import "./SingleItem.css";
 
@@ -20,7 +21,7 @@ export default function SingleItem() {
   const history = useHistory();
   const [item, setItem] = useState(null);
   const [isPageLoading, setIsPageLoading] = useState(true);
-  // const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [open, setOpen] = useState(false);
   const [verify, setVerify] = useState(false);
   const [name, setName] = useState("");
@@ -64,6 +65,8 @@ export default function SingleItem() {
   async function handleSubmit(event) {
     event.preventDefault();
 
+    setIsLoading(true);
+
     try {
       await saveNote({
         available: item.quanityAvailable - quanity > 0,
@@ -75,9 +78,9 @@ export default function SingleItem() {
           quanity
         }
       });
+      toast.success(`Thank you for your purchase of ${item.title}!`);
       history.push("/");
     } catch (e) {
-      console.log(e)
       onError(e);
     }
   }
@@ -139,15 +142,16 @@ export default function SingleItem() {
               <Form.Label className="checkbox-label">I promise that I have already purchased this item.</Form.Label>
             </Row>
             <Row>
-              <Button
+              <LoaderButton
                 variant="primary"
                 size="lg"
                 className="item-submit"
                 type="submit"
+                isLoading={isLoading}
                 disabled={!validateSubmit()}
               >
                 Submit
-              </Button>
+              </LoaderButton>
             </Row>
           </Form.Group>
         </Form>

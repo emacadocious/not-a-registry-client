@@ -1,4 +1,5 @@
 import * as Sentry from "@sentry/browser";
+import { toast } from 'react-toastify';
 
 const isLocal = process.env.NODE_ENV === "development";
 
@@ -19,7 +20,7 @@ export function onError(error) {
 
   logError(error, errorInfo);
 
-  alert(message);
+  toast.error(message)
 }
 
 export function initSentry() {
