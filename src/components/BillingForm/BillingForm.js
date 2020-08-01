@@ -1,12 +1,15 @@
 import React, { useState } from "react";
 import { Form } from "react-bootstrap";
 import { CardElement, useStripe, useElements } from '@stripe/react-stripe-js';
+
+import { isMobileDevice } from '../../libs/mobileLib';
 import { LoaderButton } from "../";
 import "./BillingForm.css";
 
 function BillingForm({ isLoading, onSubmit, handleFieldChange, name, ...props }) {
   const [isProcessing, setIsProcessing] = useState(false);
   const [isCardComplete, setIsCardComplete] = useState(false);
+  const isMobile = isMobileDevice();
 
   const stripe = useStripe();
   const elements = useElements();
@@ -54,6 +57,21 @@ function BillingForm({ isLoading, onSubmit, handleFieldChange, name, ...props })
         className="card-field"
         onChange={e => setIsCardComplete(e.complete)}
         size="lg"
+        options={{
+          style: {
+            base: {
+              fontSize: !isMobile ? '24px' : '14px',
+              color: '#424770',
+              '::placeholder': {
+                color: '#aab7c4',
+              },
+              lineHeight: '50px',
+            },
+            invalid: {
+              color: '#9e2146',
+            },
+          },
+        }}
       />
       <LoaderButton
         block

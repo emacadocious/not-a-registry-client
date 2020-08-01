@@ -63,7 +63,7 @@ html {
 }
 
 .item-input-form {
-  max-width: 480px;
+  max-width: 600px;
   margin: 0 auto;
 }
 
@@ -76,7 +76,18 @@ input[type=checkbox]
   margin-bottom: 15px;
 }
 
+input[type="text"]
+{
+    font-size:1.5em;
+    height: 75px;
+}
+
 .checkbox-label {
   margin-left: 10px;
   font-size: 1.25em;
+}
+
+
+.card-field {
+  width: 100%;
 }
