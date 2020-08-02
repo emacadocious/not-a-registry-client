@@ -10,11 +10,11 @@ import { useFormFields } from "../../libs/hooksLib";
 import { onError } from "../../libs/errorLib";
 import config from "../../config";
 import { BillingForm } from "../../components";
-import "./Settings.css";
+import "./Stripe.css";
 
 const stripePromise = loadStripe(config.STRIPE_KEY);
 
-export default function Settings() {
+export default function Stripe() {
   const history = useHistory();
   const { id } = useParams();
   const [isLoading, setIsLoading] = useState(false);
@@ -71,7 +71,7 @@ export default function Settings() {
   }
 
   return (
-    <div className="settings">
+    <div className="stripe">
       <Elements stripe={stripePromise}>
         <BillingForm
           isLoading={isLoading}

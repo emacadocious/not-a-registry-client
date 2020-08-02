@@ -7,7 +7,7 @@ import { toast } from 'react-toastify';
 import config from "../../config";
 import { LoaderComponent, QuanitySelect, LoaderButton } from "../../components";
 import { onError } from "../../libs/errorLib";
-import { Settings } from '../';
+import { Stripe } from '../';
 import { currencyFormatter } from '../../libs/currencyLib';
 import { AppContext } from "../../libs/contextLib";
 import { range } from "../../libs/rangeLib";
@@ -115,7 +115,7 @@ export default function SingleItem() {
   function renderPurchase() {
     return (
       <div>
-        <Settings />
+        <Stripe />
       </div>
     );
   }
