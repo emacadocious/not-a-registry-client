@@ -56,15 +56,22 @@ export default function Home() {
 
   return (
     <div className="home">
-      <Banner />
-      <About />
-      <div className="main-container">
-        <Container>
-          <Row>
-            {renderItems()}
-          </Row>
-        </Container>
-      </div>
+      {
+        !isLoading ?
+          (
+            <div>
+              <Banner />
+              <About />
+              <div className="main-container">
+                <Container>
+                  <Row>
+                    {renderItems()}
+                  </Row>
+                </Container>
+              </div>
+            </div>
+          ) : <LoaderComponent />
+      }
     </div>
   );
 }
