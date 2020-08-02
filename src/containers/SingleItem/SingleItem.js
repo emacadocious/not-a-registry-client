@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useHistory } from "react-router-dom";
 import { API, Storage } from "aws-amplify";
-import { Container, Row, Image, Button, Collapse, Form, Col } from "react-bootstrap";
+import { Container, Row, Image, Button, Collapse, Form, Col, ListGroup } from "react-bootstrap";
 import { toast } from 'react-toastify';
 
 import config from "../../config";
@@ -206,6 +206,19 @@ export default function SingleItem() {
                     </div>
                   </Collapse>
                 </span>
+                {
+                  item.whereToBuy && item.whereToBuy.length &&
+                    <Row>
+                      <span className="where-to-find">
+                        <p>Where to find in Lima:</p>
+                      </span>
+                      <ListGroup>
+                        {item.whereToBuy.map((location, index) =>
+                          <ListGroup.Item action key={index}>{location}</ListGroup.Item>
+                        )}
+                      </ListGroup>
+                    </Row>
+                }
                 <Row className="item-price">
                   <span>{currencyFormatter(Number(item.price))}</span>
                 </Row>

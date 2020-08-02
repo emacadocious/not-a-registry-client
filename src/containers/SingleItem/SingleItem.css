@@ -39,7 +39,7 @@ html {
 }
 
 .item-price span {
-  margin: 25px 0;
+  margin: 15px 0;
   font-size: 2.5em;
   font-weight: bold;
 }
@@ -87,7 +87,13 @@ input[type="text"]
   font-size: 1.25em;
 }
 
-
 .card-field {
   width: 100%;
+}
+
+.where-to-find {
+  display: block;
+  width: 100%;
+  font-size: 1.5em;
+  margin-top: 15px;
 }

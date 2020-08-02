@@ -126,6 +126,9 @@ export default function Signup() {
           />
         </Form.Group>
         <Form.Group>
+          <small>**Password must be at least 8 characters and MUST contain Uppercase and Lowercase characters, Special characters, and numbers</small>
+        </Form.Group>
+        <Form.Group>
           <RenderTooltip
             title="Why do I need to create an account?"
           />
