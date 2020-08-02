@@ -34,7 +34,7 @@ const About = () => (
       </Col>
     </Row>
     <Row className="about-us-why">
-      However...We don't have Amazon, or international delivery so this is our "registry". You can give us money and we buy the gifts.
+      However...We don't have Amazon, or international delivery so this is our "registry". You can virtually purchase the items here, and we’ll buy the gifts.
     </Row>
   </Container>
 );

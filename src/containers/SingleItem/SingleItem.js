@@ -127,6 +127,7 @@ export default function SingleItem() {
           <Form.Group>
             <Row>
               <Form.Control
+                type="text"
                 placeholder="Your Name"
                 className="item-input"
                 onChange={e => setName(e.target.value)}

@@ -42,7 +42,7 @@ export default function Home() {
     if (items) {
       markup = (
         <div className="items">
-          <h1>Items</h1>
+          <span className="items-title">Items we'll need..</span>
           <CardDeck>
             <CardColumns data-aos="fade-up">
               {!isLoading && renderItemsList(items)}
@@ -55,7 +55,7 @@ export default function Home() {
   }
 
   return (
-    <div className="Home">
+    <div className="home">
       <Banner />
       <About />
       <div className="main-container">

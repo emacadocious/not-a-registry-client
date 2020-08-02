@@ -1,22 +1,22 @@
-.Home .lander {
+.home .lander {
   padding: 80px 0;
   text-align: center;
 }
 
-.Home .lander h1 {
+.home .lander h1 {
   font-family: "Open Sans", sans-serif;
   font-weight: 600;
 }
 
-.Home .lander p {
+.home .lander p {
   color: #999;
 }
 
-.Home .items {
+.home .items {
   width: 100%;
 }
 
-.Home .items h4 {
+.home .items h4 {
   font-family: "Open Sans", sans-serif;
   font-weight: 600;
   overflow: hidden;
@@ -24,14 +24,14 @@
   white-space: nowrap;
   text-overflow: ellipsis;
 }
-.Home .items p {
+.home .items p {
   color: #666;
 }
 
-.Home .lander div {
+.home .lander div {
   padding-top: 20px;
 }
-.Home .lander div a:first-child {
+.home .lander div a:first-child {
   margin-right: 20px;
 }
 
@@ -42,4 +42,8 @@
   text-align: center;
   box-shadow: 0 0px 10px 1px;
   border-radius: 15px;
+}
+
+.items-title {
+  font-size: 4em;
 }
